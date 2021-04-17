@@ -1,57 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { CssBaseline, LinearProgress, ThemeProvider } from "@material-ui/core";
+import React from "react";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import theme from "./app/theme";
+import Toast from "./components/Toast";
+import { Counter } from "./features/counter/Counter";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+
+function LoadingBlur({ children }) {
+  const loading = useSelector((state) => state.app.loading);
+
+  const style = {
+    blur: {
+      opacity: loading ? "0.6" : "1",
+      pointerEvents: loading ? "none" : "",
+    },
+  };
+
+  return (
+    <div>
+      {loading ? <LinearProgress /> : null}
+      <div style={style.blur}>{children}</div>
+    </div>
+  );
+}
+
+const PrivateRoute = ({ component, isAuth, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuth ? (
+          React.createElement(component, props)
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 
 function App() {
+  console.log("rerendered");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Toast />
+          <LoadingBlur>
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/signup" component={SignupPage} />
+              {/* <PrivateRoute exact path="/" auth={auth} component={MyRequests} />
+            <PrivateRoute
+              path="/requestForm"
+              auth={auth}
+              component={RequestForm}
+            /> */}
+            </Switch>
+          </LoadingBlur>
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
   );
 }
 
