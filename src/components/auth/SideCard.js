@@ -1,4 +1,4 @@
-import { Box, makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles, Paper, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +26,9 @@ const SideCard = ({ msg, imgPath }) => {
   return (
     <Paper className={classes.root} elevation={3}>
       <Typography component="p" variant="h4" gutterBottom>
-        <b>{msg}</b>
+        {msg.map((s, i) => (
+          <b key={i}>{s}</b>
+        ))}
       </Typography>
       <div className={classes.image}>
         <img src={imgPath} alt="welcome" width="100%"></img>

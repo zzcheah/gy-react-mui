@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import theme from "./app/theme";
 import Toast from "./components/Toast";
-import { Counter } from "./features/counter/Counter";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
+import MyRequests from "./pages/MyRequests";
 import SignupPage from "./pages/SignupPage";
 
 function LoadingBlur({ children }) {
@@ -27,12 +27,13 @@ function LoadingBlur({ children }) {
   );
 }
 
-const PrivateRoute = ({ component, isAuth, ...rest }) => {
+const PrivateRoute = ({ component, ...rest }) => {
+  const auth = useSelector((state) => state.auth.user);
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuth ? (
+        auth ? (
           React.createElement(component, props)
         ) : (
           <Redirect
@@ -61,8 +62,8 @@ function App() {
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={SignupPage} />
-              {/* <PrivateRoute exact path="/" auth={auth} component={MyRequests} />
-            <PrivateRoute
+              <PrivateRoute exact path="/myRequests" component={MyRequests} />
+              {/* <PrivateRoute
               path="/requestForm"
               auth={auth}
               component={RequestForm}

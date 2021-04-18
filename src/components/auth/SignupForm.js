@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
 const SignupForm = () => {
   const classes = useStyles();
   const history = useHistory();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(
+    //   loginUser({
+    //     credentials,
+    //     history,
+    //   })
+    // );
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -50,7 +59,7 @@ const SignupForm = () => {
         <Typography component="h2" variant="body2" gutterBottom>
           Enter your details below.
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -110,19 +119,14 @@ const SignupForm = () => {
               Register
             </Button>
           </div>
-
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => history.push("/login")}
-              >
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
+        <Grid container justify="flex-end">
+          <Grid item>
+            <Link variant="body2" onClick={() => history.push("/login")}>
+              Already have an account? Sign in
+            </Link>
+          </Grid>
+        </Grid>
       </div>
       <Box mt={5}>
         <Copyright />

@@ -119,24 +119,19 @@ const LoginForm = () => {
               Sign In
             </Button>
           </div>
-
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => history.push("/signup")}
-              >
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
+        <Grid container>
+          <Grid item xs>
+            <Link href="#" variant="body2">
+              Forgot password?
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link variant="body2" onClick={() => history.push("/signup")}>
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Grid>
+        </Grid>
       </div>
       <Box mt={5}>
         <Copyright />

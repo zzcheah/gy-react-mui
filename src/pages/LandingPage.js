@@ -30,6 +30,13 @@ const LandingPage = () => {
         >
           Signup
         </Button>
+        <Button
+          onClick={() => {
+            history.push("/myRequests");
+          }}
+        >
+          My Requests
+        </Button>
       </Container>
     </div>
   );

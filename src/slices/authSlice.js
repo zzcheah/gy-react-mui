@@ -1,16 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { toggleLoading, addToast } from "./appSlice";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
-const initialState = {
+// init states
+var initialState = {
   user: null,
-  jwt: "",
+  jwt: null,
 };
+
+if (localStorage.auth) {
+  const auth = localStorage.getItem("auth");
+  if (auth) {
+    const { profile, jwt } = JSON.parse(auth);
+    const current_time = new Date().getTime() / 1000;
+    const decoded = jwt_decode(jwt);
+    if (current_time < decoded.exp) {
+      initialState = { user: profile, jwt };
+    }
+  }
+}
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    clearAuth: (state) => {
+      state.user = null;
+      state.jwt = null;
+    },
     setAuth: (state, action) => {
       const { profile, jwt } = action.payload;
       state.user = profile;
@@ -19,9 +37,11 @@ export const authSlice = createSlice({
   },
 });
 
-const { setAuth } = authSlice.actions;
-
+// exports
+const { setAuth, clearAuth } = authSlice.actions;
 export default authSlice.reducer;
+
+// thunks
 export const loginUser = ({ credentials, history }) => {
   return (dispatch) => {
     dispatch(toggleLoading());
@@ -31,7 +51,7 @@ export const loginUser = ({ credentials, history }) => {
       .post("http://localhost:2358/authenticate", credentials)
       .then((res) => {
         console.log(res);
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("auth", JSON.stringify(res.data));
         dispatch(setAuth(res.data));
         dispatch(
           addToast({
@@ -42,7 +62,6 @@ export const loginUser = ({ credentials, history }) => {
         history.push("/");
       })
       .catch((err) => {
-        console.log("wtf");
         console.log(err);
         dispatch(
           addToast({
@@ -52,5 +71,14 @@ export const loginUser = ({ credentials, history }) => {
         );
       })
       .finally(dispatch(toggleLoading()));
+  };
+};
+
+export const logoutUser = (history) => {
+  return (dispatch) => {
+    dispatch(toggleLoading());
+    localStorage.clear();
+    dispatch(clearAuth());
+    dispatch(toggleLoading());
   };
 };

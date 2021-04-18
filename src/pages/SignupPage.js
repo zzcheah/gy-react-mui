@@ -1,10 +1,10 @@
-import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SideCard from "../components/auth/SideCard";
 import SignupForm from "../components/auth/SignupForm";
 
-const message = "Avoid the hassle of setting up GPU-accelerated environment.";
+const message = ["Avoid the hassle of setting up GPU-accelerated environment."];
 const imgPath = "images/register.png";
 
 const useStyles = makeStyles((theme) => ({
