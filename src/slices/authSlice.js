@@ -21,6 +21,8 @@ if (localStorage.auth) {
   }
 }
 
+export const { jwt } = initialState;
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -50,7 +52,7 @@ export const loginUser = ({ credentials, history }) => {
     axios
       .post("http://localhost:2358/authenticate", credentials)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         localStorage.setItem("auth", JSON.stringify(res.data));
         dispatch(setAuth(res.data));
         dispatch(

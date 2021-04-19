@@ -122,7 +122,11 @@ const SignupForm = () => {
         </form>
         <Grid container justify="flex-end">
           <Grid item>
-            <Link variant="body2" onClick={() => history.push("/login")}>
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => history.push("/login")}
+            >
               Already have an account? Sign in
             </Link>
           </Grid>

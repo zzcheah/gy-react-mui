@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -127,7 +123,11 @@ const LoginForm = () => {
             </Link>
           </Grid>
           <Grid item>
-            <Link variant="body2" onClick={() => history.push("/signup")}>
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => history.push("/signup")}
+            >
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
