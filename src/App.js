@@ -12,7 +12,8 @@ import theme from "./app/theme";
 import Toast from "./components/Toast";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
-import MyRequests from "./pages/MyRequests";
+import MyRequestPage from "./pages/MyRequestsPage";
+
 import SignupPage from "./pages/SignupPage";
 import { setContext } from "@apollo/client/link/context";
 
@@ -90,7 +91,11 @@ function App() {
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />
-                <PrivateRoute exact path="/myRequests" component={MyRequests} />
+                <PrivateRoute
+                  exact
+                  path="/myRequests"
+                  component={MyRequestPage}
+                />
                 {/* <PrivateRoute
               path="/requestForm"
               auth={auth}

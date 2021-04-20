@@ -1,9 +1,11 @@
+import { Container } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import MyRequestsList from "../components/request/MyRequestList";
 import { logoutUser } from "../slices/authSlice";
 
-const MyRequests = () => {
+const MyRequestPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -12,11 +14,13 @@ const MyRequests = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h1>Private My Requests</h1>
+      <MyRequestsList />
+      <Button onClick={() => history.push("/")}>Home</Button>
       <Button onClick={handleLogout}>Log Out</Button>
-    </div>
+    </Container>
   );
 };
 
-export default MyRequests;
+export default MyRequestPage;
