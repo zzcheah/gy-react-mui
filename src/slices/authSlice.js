@@ -21,8 +21,6 @@ if (localStorage.auth) {
   }
 }
 
-export const { jwt } = initialState;
-
 export const authSlice = createSlice({
   name: "auth",
   initialState,

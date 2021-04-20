@@ -14,6 +14,8 @@ const LandingPage = () => {
     dispatch(toggleLoading());
   };
 
+  // console.log("Rendering Landing Page")
+
   return (
     <div>
       <Container>
