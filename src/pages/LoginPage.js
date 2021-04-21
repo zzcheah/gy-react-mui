@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import AuthHeader from "../components/auth/AuthHeader";
 import LoginForm from "../components/auth/LoginForm";
 import SideCard from "../components/auth/SideCard";
 
@@ -20,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: "2",
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("md")]: {
+      paddingTop: "64px",
+      alignItems: "start",
+    },
   },
 }));
 
@@ -31,6 +36,7 @@ const LoginPage = () => {
 
   return (
     <div className={classes.root}>
+      <AuthHeader />
       <SideCard msg={message} imgPath={imgPath} />
       <div className={classes.form}>
         <LoginForm />

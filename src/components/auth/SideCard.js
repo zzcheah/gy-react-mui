@@ -1,5 +1,4 @@
-import { Button, makeStyles, Paper, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { makeStyles, Paper, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SideCard = ({ msg, imgPath }) => {
   const classes = useStyles();
-  const history = useHistory();
   return (
     <Paper className={classes.root} elevation={3}>
       <Typography component="p" variant="h4" gutterBottom>
@@ -35,7 +33,6 @@ const SideCard = ({ msg, imgPath }) => {
       <div className={classes.image}>
         <img src={imgPath} alt="welcome" width="100%"></img>
       </div>
-      <Button onClick={() => history.push("/")}>Home</Button>
     </Paper>
   );
 };

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     overflow: "hidden",
     marginBottom: theme.spacing(2),
+    padding: theme.spacing(3),
   },
 
   toolbar: {
@@ -33,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 1 100%",
   },
   table: {
-    minWidth: 750,
+    // minWidth: 750,
   },
 }));
 
 const CustomTable = (props) => {
   const { title, columns, rows } = props;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const classes = useStyles();
 
@@ -72,7 +73,11 @@ const CustomTable = (props) => {
       </Toolbar>
 
       <TableContainer className={classes.container}>
-        <Table className={classes.table} aria-labelledby="tableTitle">
+        <Table
+          className={classes.table}
+          stickyHeader
+          aria-labelledby="tableTitle"
+        >
           <TableHead>
             <TableRow>
               {columns.map((column) => (

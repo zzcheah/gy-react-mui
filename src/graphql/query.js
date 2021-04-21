@@ -6,7 +6,6 @@ export const MY_REQUESTS = gql`
       id
       status
       createdAt
-      title
       image
       user {
         email

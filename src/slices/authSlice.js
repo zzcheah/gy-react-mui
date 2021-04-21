@@ -48,7 +48,7 @@ export const loginUser = ({ credentials, history }) => {
     console.log("User logging in");
 
     axios
-      .post("http://localhost:2358/authenticate", credentials)
+      .post("http://42.189.142.163:2358/authenticate", credentials)
       .then((res) => {
         // console.log(res);
         localStorage.setItem("auth", JSON.stringify(res.data));
@@ -59,7 +59,7 @@ export const loginUser = ({ credentials, history }) => {
             severity: "success",
           })
         );
-        history.push("/");
+        history.push("/myRequests");
       })
       .catch((err) => {
         console.log(err);

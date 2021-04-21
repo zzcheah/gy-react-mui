@@ -19,7 +19,9 @@ const LandingPage = () => {
   return (
     <div>
       <Container>
-        <Typography variant="h1">HelloWorld</Typography>
+        <Typography variant="h2" component="h1">
+          Hello,
+        </Typography>
         <Button onClick={handleClick}>Toggle Loading</Button>
         <Button
           onClick={() => {

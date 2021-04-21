@@ -62,7 +62,7 @@ function App() {
   const jwt = useSelector((state) => state.auth.jwt);
 
   const httpLink = createHttpLink({
-    uri: "http://localhost:2358/graphql",
+    uri: "http://42.189.142.163:2358/graphql",
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -74,9 +74,21 @@ function App() {
     };
   });
 
+  // const defaultOptions = {
+  //   watchQuery: {
+  //     fetchPolicy: "no-cache",
+  //     errorPolicy: "ignore",
+  //   },
+  //   query: {
+  //     fetchPolicy: "no-cache",
+  //     errorPolicy: "all",
+  //   },
+  // };
+
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
+    // defaultOptions: defaultOptions,
   });
 
   return (
