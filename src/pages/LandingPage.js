@@ -39,10 +39,10 @@ const LandingPage = () => {
         </Button>
         <Button
           onClick={() => {
-            history.push("/myRequests");
+            history.push("/dashboard");
           }}
         >
-          My Requests
+          Dashboard
         </Button>
         <Button
           onClick={() => {

@@ -1,14 +1,14 @@
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
 import Badge from "@material-ui/core/Badge";
-import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useState } from "react";
+import NotificationPopover from "./NotificaitonPopover";
+import AccountPopover from "./AccountPopover";
 
 const recolor = {
   color: "rgb(33, 43, 54)",
@@ -29,43 +29,19 @@ const CustomAppBar = (props) => {
     setActiveMenu(event.currentTarget.id);
   };
 
-  const profileMenuId = "profile-menu";
-  const renderProfile = (
-    <Popover
-      open={activeMenu === profileMenuId}
-      anchorEl={anchorEl}
-      onClose={handleMenuClose}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-    >
-      <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-    </Popover>
-  );
+  const accountMenuId = "account-menu";
+  const accountHandle = {
+    open: activeMenu === accountMenuId,
+    handleMenuClose,
+    anchorEl,
+  };
 
   const notificationMenuId = "notification-menu";
-  const renderNotification = (
-    <Popover
-      open={activeMenu === notificationMenuId}
-      anchorEl={anchorEl}
-      onClose={handleMenuClose}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-    >
-      <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-    </Popover>
-  );
+  const notificationHandle = {
+    open: activeMenu === notificationMenuId,
+    handleMenuClose,
+    anchorEl,
+  };
 
   return (
     <div>
@@ -97,10 +73,10 @@ const CustomAppBar = (props) => {
               </Badge>
             </IconButton>
             <IconButton
-              id={profileMenuId}
+              id={accountMenuId}
               edge="end"
               aria-label="account of current user"
-              aria-controls={profileMenuId}
+              aria-controls={accountMenuId}
               aria-haspopup="true"
               onClick={handleMenuOpen}
               color="inherit"
@@ -111,8 +87,8 @@ const CustomAppBar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderProfile}
-      {renderNotification}
+      <NotificationPopover handle={notificationHandle} />
+      <AccountPopover handle={accountHandle} />
     </div>
   );
 };

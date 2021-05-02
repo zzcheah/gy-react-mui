@@ -48,7 +48,7 @@ export const loginUser = ({ credentials, history }) => {
     console.log("User logging in");
 
     axios
-      .post("http://42.189.142.163:2358/authenticate", credentials)
+      .post("http://localhost:2358/authenticate", credentials)
       .then((res) => {
         // console.log(res);
         localStorage.setItem("auth", JSON.stringify(res.data));
@@ -59,7 +59,8 @@ export const loginUser = ({ credentials, history }) => {
             severity: "success",
           })
         );
-        history.push("/myRequests");
+        history.push("/dashboard");
+        dispatch(toggleLoading());
       })
       .catch((err) => {
         console.log(err);
@@ -69,8 +70,8 @@ export const loginUser = ({ credentials, history }) => {
             severity: "error",
           })
         );
-      })
-      .finally(dispatch(toggleLoading()));
+        dispatch(toggleLoading());
+      });
   };
 };
 

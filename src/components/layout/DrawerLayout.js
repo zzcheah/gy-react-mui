@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SideBar from "./SideBar";
 import CustomAppBar from "./CustomAppBar";
 import { useState } from "react";
+import CustomSpeedDial from "./CustomSpeedDial";
 
 const drawerWidth = 280;
 
@@ -67,6 +68,7 @@ function DrawerLayout(props) {
         <div className={classes.toolbar} />
         <div style={{ padding: "0 15px " }}>{children}</div>
       </main>
+      <CustomSpeedDial />
     </div>
   );
 }

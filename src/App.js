@@ -1,21 +1,22 @@
+import React from "react";
 import {
   ApolloClient,
   ApolloProvider,
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { CssBaseline, LinearProgress, ThemeProvider } from "@material-ui/core";
-import React from "react";
-import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
 import theme from "./app/theme";
 import Toast from "./components/Toast";
-import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
-import MyRequestPage from "./pages/MyRequestsPage";
-
 import SignupPage from "./pages/SignupPage";
-import { setContext } from "@apollo/client/link/context";
+import LandingPage from "./pages/LandingPage";
+import { GENERAL_PAGES } from "./app/constants";
+import EditProfile from "./pages/subpages/EditProfile";
+import UnderMaintenance from "./components/util/UnderMaintenance";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -35,10 +36,11 @@ function LoadingBlur({ children }) {
   );
 }
 
-const PrivateRoute = ({ component, ...rest }) => {
+function PrivateRoute({ component, ...rest }) {
   const auth = useSelector((state) => state.auth.user);
   return (
     <Route
+      exact
       {...rest}
       render={(props) =>
         auth ? (
@@ -54,7 +56,7 @@ const PrivateRoute = ({ component, ...rest }) => {
       }
     />
   );
-};
+}
 
 function App() {
   console.log("Rendering App");
@@ -62,7 +64,7 @@ function App() {
   const jwt = useSelector((state) => state.auth.jwt);
 
   const httpLink = createHttpLink({
-    uri: "http://42.189.142.163:2358/graphql",
+    uri: "http://localhost:2358/graphql",
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -103,16 +105,23 @@ function App() {
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />
-                <PrivateRoute
-                  exact
-                  path="/myRequests"
-                  component={MyRequestPage}
-                />
+                {GENERAL_PAGES.map((item, index) => (
+                  <PrivateRoute
+                    exact
+                    key={index}
+                    path={item.path}
+                    component={item.page}
+                  />
+                ))}
+                <PrivateRoute path="/editProfile" component={EditProfile} />
+                <PrivateRoute path="/settings" component={UnderMaintenance} />
+
                 {/* <PrivateRoute
               path="/requestForm"
               auth={auth}
               component={RequestForm}
             /> */}
+                <Redirect to="/dashboard" />
               </Switch>
             </LoadingBlur>
           </BrowserRouter>
