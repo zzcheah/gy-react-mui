@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toggleLoading, addToast } from "./appSlice";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { BACKEND_HOST } from "../app/constants";
 
 // init states
 var initialState = {
@@ -48,7 +49,7 @@ export const loginUser = ({ credentials, history }) => {
     console.log("User logging in");
 
     axios
-      .post("http://localhost:2358/authenticate", credentials)
+      .post(BACKEND_HOST + "authenticate", credentials)
       .then((res) => {
         // console.log(res);
         localStorage.setItem("auth", JSON.stringify(res.data));

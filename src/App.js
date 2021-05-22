@@ -14,8 +14,9 @@ import Toast from "./components/Toast";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
-import { GENERAL_PAGES } from "./app/constants";
+import { BACKEND_HOST, GENERAL_PAGES } from "./app/constants";
 import EditProfile from "./pages/subpages/EditProfile";
+import WorkerDetail from "./pages/subpages/WorkerDetail";
 import UnderMaintenance from "./components/util/UnderMaintenance";
 
 function LoadingBlur({ children }) {
@@ -64,7 +65,7 @@ function App() {
   const jwt = useSelector((state) => state.auth.jwt);
 
   const httpLink = createHttpLink({
-    uri: "http://localhost:2358/graphql",
+    uri: BACKEND_HOST + "graphql",
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -114,6 +115,7 @@ function App() {
                   />
                 ))}
                 <PrivateRoute path="/editProfile" component={EditProfile} />
+                <PrivateRoute path="/workers/:id" component={WorkerDetail} />
                 <PrivateRoute path="/settings" component={UnderMaintenance} />
 
                 {/* <PrivateRoute

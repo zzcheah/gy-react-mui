@@ -1,5 +1,23 @@
 import { createMuiTheme } from "@material-ui/core";
 
+export const scrollBarStyle = {
+  "&::-webkit-scrollbar": {
+    width: "0.4em",
+  },
+  "&::-webkit-scrollbar-track": {
+    "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "rgba(0,0,0,.1)",
+    borderRadius: "20px",
+    border: "6px solid transparent",
+    // outline: "1px solid slategrey",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#a8bbbf",
+  },
+};
+
 const theme = createMuiTheme({
   shape: {
     borderRadius: 16,
@@ -55,6 +73,13 @@ const theme = createMuiTheme({
         root: {
           // margin: "0",
           // padding: "0",
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          ...scrollBarStyle,
         },
       },
     },

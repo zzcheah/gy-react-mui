@@ -9,6 +9,8 @@ import NotificationsPage from "../pages/NotificationsPage";
 import UsersPage from "../pages/UsersPage";
 import WorkersPage from "../pages/WorkersPage";
 
+export const BACKEND_HOST = "http://localhost:2358/";
+
 export const GENERAL_PAGES = [
   {
     icon: <Dashboard />,
