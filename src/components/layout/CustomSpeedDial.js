@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@material-ui/core/Box";
 import SpeedDial from "@material-ui/core/SpeedDial";
 import SpeedDialIcon from "@material-ui/core/SpeedDialIcon";
@@ -7,6 +6,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import QueuePlayNextIcon from "@material-ui/icons/QueuePlayNext";
 import { useHistory } from "react-router-dom";
+import AddWorkerDialog from "../dialogs/AddWorkerDialog";
+import { useState } from "react";
+import AddImageDialog from "../dialogs/AddImageDialog";
 
 const actions = [
   {
@@ -22,31 +24,41 @@ const actions = [
 ];
 
 export default function CustomSpeedDial() {
+  const [currentDialog, setCurrentDialog] = useState(null);
   const history = useHistory();
+
+  const handleClose = () => {
+    setCurrentDialog(null);
+  };
+
   return (
-    <Box
-      sx={{
-        height: 200,
-        transform: "translateZ(0px)",
-        flexGrow: 1,
-        position: "fixed",
-        bottom: 20,
-        right: 20,
-      }}
-    >
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+    <div>
+      <Box
+        sx={{
+          height: 200,
+          transform: "translateZ(0px)",
+          flexGrow: 1,
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+        }}
       >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={() => history.push(action.path)}
-          />
-        ))}
-      </SpeedDial>
-    </Box>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+        >
+          {actions.map((action, index) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={() => setCurrentDialog(index)}
+            />
+          ))}
+        </SpeedDial>
+      </Box>
+      <AddWorkerDialog open={currentDialog === 0} handleClose={handleClose} />
+      <AddImageDialog open={currentDialog === 1} handleClose={handleClose} />
+    </div>
   );
 }
