@@ -24,7 +24,7 @@ function Logo() {
           width: "100%",
         }}
       >
-        <img src={"logo.png"} alt="logo" height="100%" />
+        <img src={"/logo.png"} alt="logo" height="100%" />
       </div>
     </Link>
   );
@@ -87,7 +87,7 @@ const SideBar = (props) => {
             key={index}
             path={item.path}
             id={item.text}
-            selected={item.path === path}
+            selected={path.includes(item.path)}
             onClick={handleNavigate}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>

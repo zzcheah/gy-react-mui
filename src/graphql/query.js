@@ -19,3 +19,51 @@ export const REQUEST_COUNTS = gql`
     countRequests
   }
 `;
+
+export const GET_DOCKER_IMAGES = gql`
+  query DockerImages {
+    dockerImages {
+      id
+      name
+      tags {
+        tag
+        description
+      }
+      usageCount
+      description
+    }
+  }
+`;
+
+export const LIST_WORKERS = gql`
+  query ListWorkers {
+    workerList {
+      id
+      name
+      maxTasks
+      ipAddress
+      lastActive
+      status
+      runningTasks
+    }
+  }
+`;
+
+export const GET_ALL_USERS = gql`
+  query GetAllUsers {
+    allUsers {
+      id
+      name
+      email
+      phone
+    }
+  }
+`;
+
+export const GET_ALL_REQUESTS = gql`
+  query GetAllRequests {
+    allRequests {
+      id
+    }
+  }
+`;
