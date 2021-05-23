@@ -14,7 +14,6 @@ import CustomCard from "../util/CustomCard";
 const Ranking = (props) => {
   const { images } = props;
   const sorted = images.slice().sort((a, b) => b.usageCount - a.usageCount);
-  console.log(sorted);
 
   return (
     <List dense>

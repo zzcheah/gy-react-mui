@@ -9,6 +9,8 @@ import { Grid } from "@material-ui/core";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_NEW_IMAGE } from "../../graphql/mutation";
+import { useDispatch } from "react-redux";
+import { addToast, toggleLoading } from "../../slices/appSlice";
 
 const defaultValue = {
   image: "",
@@ -17,6 +19,7 @@ const defaultValue = {
 };
 
 export default function AddImageDialog(props) {
+  const dispatch = useDispatch();
   const { open, handleClose } = props;
   const [input, setInput] = useState(defaultValue);
   const [addNewImage] = useMutation(ADD_NEW_IMAGE);
@@ -24,7 +27,24 @@ export default function AddImageDialog(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(input);
-    addNewImage({ variables: { input } });
+    dispatch(toggleLoading());
+    addNewImage({ variables: { input } })
+      .then(() => {
+        dispatch(
+          addToast({
+            message: "Successfully Created Image",
+            severity: "success",
+          })
+        );
+        dispatch(toggleLoading());
+      })
+      .catch((err) => {
+        addToast({
+          message: err.toString(),
+          severity: "error",
+        });
+        dispatch(toggleLoading());
+      });
     setInput(defaultValue);
     handleClose();
   };
@@ -74,7 +94,7 @@ export default function AddImageDialog(props) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={12} sm={11}>
               <TextField
                 margin="dense"
                 required

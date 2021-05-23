@@ -7,6 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../slices/authSlice";
+import { useState } from "react";
 
 function Copyright() {
   return (
@@ -39,14 +42,29 @@ const useStyles = makeStyles((theme) => ({
 const SignupForm = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.id]: e.target.value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(
-    //   loginUser({
-    //     credentials,
-    //     history,
-    //   })
-    // );
+    console.log(input);
+    dispatch(
+      registerUser({
+        input,
+        history,
+      })
+    );
   };
 
   return (
@@ -60,27 +78,17 @@ const SignupForm = () => {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,7 +99,9 @@ const SignupForm = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                type="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -104,6 +114,7 @@ const SignupForm = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
               />
             </Grid>
           </Grid>

@@ -84,7 +84,9 @@ const CustomTable = (props) => {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{
+                    minWidth: column.minWidth,
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -97,7 +99,13 @@ const CustomTable = (props) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={index}
+                    onClick={row.action ? row.action : null}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (

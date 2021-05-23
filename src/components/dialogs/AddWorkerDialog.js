@@ -9,6 +9,8 @@ import { Grid } from "@material-ui/core";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REGISTER_WORKER } from "../../graphql/mutation";
+import { useDispatch } from "react-redux";
+import { addToast, toggleLoading } from "../../slices/appSlice";
 
 const defaultValue = {
   name: "",
@@ -17,6 +19,7 @@ const defaultValue = {
 };
 
 export default function AddWorkerDialog(props) {
+  const dispatch = useDispatch();
   const { open, handleClose } = props;
   const [input, setInput] = useState(defaultValue);
   const [registerWorker] = useMutation(REGISTER_WORKER);
@@ -25,7 +28,25 @@ export default function AddWorkerDialog(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerWorker({ variables: { input } });
+
+    dispatch(toggleLoading());
+    registerWorker({ variables: { input } })
+      .then(() => {
+        dispatch(
+          addToast({
+            message: "Successfully Registered Worker",
+            severity: "success",
+          })
+        );
+        dispatch(toggleLoading());
+      })
+      .catch((err) => {
+        addToast({
+          message: err.toString(),
+          severity: "error",
+        });
+        dispatch(toggleLoading());
+      });
     setInput(defaultValue);
     handleClose();
   };
@@ -58,7 +79,7 @@ export default function AddWorkerDialog(props) {
             Fill in the information below to register the worker.
           </DialogContentText>
           <Grid container spacing={1} sx={{ pl: 1, pr: 1 }}>
-            <Grid item xs={10}>
+            <Grid item xs={12} sm={10}>
               <TextField
                 autoFocus
                 margin="dense"

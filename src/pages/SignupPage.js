@@ -32,7 +32,7 @@ const SignupPage = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
 
-  if (user) return <Redirect to="/" />;
+  if (user) return <Redirect to="/dashboard" />;
 
   return (
     <div className={classes.root}>

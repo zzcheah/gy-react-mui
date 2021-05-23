@@ -18,6 +18,8 @@ import { BACKEND_HOST, GENERAL_PAGES } from "./app/constants";
 import EditProfile from "./pages/subpages/EditProfile";
 import WorkerDetail from "./pages/subpages/WorkerDetail";
 import UnderMaintenance from "./components/util/UnderMaintenance";
+import UserDetail from "./pages/subpages/UserDetail";
+import Dashboard from "./pages/Dashboard";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -103,7 +105,8 @@ function App() {
             <Toast />
             <LoadingBlur>
               <Switch>
-                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/" component={SignupPage} />
+                {/* <Route exact path="/" component={Dashboard} /> */}
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />
                 {GENERAL_PAGES.map((item, index) => (
@@ -116,6 +119,7 @@ function App() {
                 ))}
                 <PrivateRoute path="/editProfile" component={EditProfile} />
                 <PrivateRoute path="/workers/:id" component={WorkerDetail} />
+                <PrivateRoute path="/users/:id" component={UserDetail} />
                 <PrivateRoute path="/settings" component={UnderMaintenance} />
 
                 {/* <PrivateRoute

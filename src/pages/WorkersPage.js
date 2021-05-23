@@ -1,17 +1,69 @@
-import { Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useQuery } from "@apollo/client";
+import {
+  Chip,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import DrawerLayout from "../components/layout/DrawerLayout";
+import CustomTable from "../components/util/CustomTable";
+import { LIST_WORKERS } from "../graphql/query";
+
+function createData(workers, history) {
+  var arr = [];
+  workers.forEach((item) => {
+    const { id, name, status, runningTasks, maxTasks, ipAddress } = item;
+    const runMax = runningTasks.length + "/" + maxTasks;
+    const statusChip = (
+      <Chip
+        label={status}
+        color={status === "Active" ? "success" : "default"}
+      />
+    );
+    const action = () => {
+      history.push(`/workers/${id}`);
+    };
+    arr.push({ id, name, statusChip, runMax, ipAddress, action });
+  });
+  return arr;
+}
+
+const WorkerTable = ({ history }) => {
+  const { loading, data, error } = useQuery(LIST_WORKERS);
+
+  if (loading) return <CircularProgress />;
+  if (error) return `Error! ${error.message}`;
+
+  const columns = [
+    { id: "id", label: "Worker ID" },
+    { id: "name", label: "Name" },
+    { id: "statusChip", label: "Status", minWidth: 86, align: "center" },
+    { id: "runMax", label: "Slots", minWidth: 100, align: "center" },
+    { id: "ipAddress", label: "IP Address" },
+  ];
+
+  const rows = createData(data.workerList, history);
+
+  return <CustomTable rows={rows} columns={columns} />;
+};
 
 const WorkersPage = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   return (
     <DrawerLayout>
-      <Typography variant="h4" component="h1">
-        <b>Workers</b>
-      </Typography>
+      <Container>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          sx={{ pb: 2, pl: 2 }}
+        >
+          <b>Workers</b>
+        </Typography>
+        <WorkerTable history={history} />
+      </Container>
     </DrawerLayout>
   );
 };

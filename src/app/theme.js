@@ -59,6 +59,13 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          ...scrollBarStyle,
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

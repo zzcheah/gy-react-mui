@@ -35,18 +35,22 @@ export default function WorkersStatus() {
       <Typography variant="h5" gutterBottom>
         Workers Status
       </Typography>
-      {loading ? <div>Loading...</div> : <WorkerList data={data} />}
+      {loading && !error ? (
+        <div>Loading...</div>
+      ) : (
+        <WorkerList workers={data.workerList} />
+      )}
+      {error ? `Error! ${error.message}` : null}
     </CustomCard>
   );
 }
 
-const WorkerList = ({ data }) => {
-  const { workerList } = data;
+const WorkerList = ({ workers }) => {
   const history = useHistory();
 
   return (
     <List sx={styles.list}>
-      {workerList.map((worker) => (
+      {workers.map((worker) => (
         <ListItem
           key={worker.id}
           button

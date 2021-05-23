@@ -64,10 +64,38 @@ export const loginUser = ({ credentials, history }) => {
         dispatch(toggleLoading());
       })
       .catch((err) => {
-        console.log(err);
         dispatch(
           addToast({
-            message: "Invalid Credentials",
+            message: err.toString(),
+            severity: "error",
+          })
+        );
+        dispatch(toggleLoading());
+      });
+  };
+};
+
+export const registerUser = ({ input, history }) => {
+  return (dispatch) => {
+    dispatch(toggleLoading());
+    console.log("Registering User");
+
+    axios
+      .post(BACKEND_HOST + "signup", input)
+      .then((res) => {
+        dispatch(
+          addToast({
+            message: "Successfully Signed Up",
+            severity: "success",
+          })
+        );
+        history.push("/login");
+        dispatch(toggleLoading());
+      })
+      .catch((err) => {
+        dispatch(
+          addToast({
+            message: err.toString(),
             severity: "error",
           })
         );

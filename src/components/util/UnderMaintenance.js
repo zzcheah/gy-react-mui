@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 
 const UnderMaintenance = () => {
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(6);
 
   useEffect(() => {
     const interval = setInterval(
@@ -24,7 +24,7 @@ const UnderMaintenance = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        height: "100vh",
+        height: "100%",
         minHeight: "720px",
       }}
     >
