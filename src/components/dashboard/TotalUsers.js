@@ -24,13 +24,14 @@ export default function TotalUsers() {
           <Typography variant="h6" gutterBottom>
             Total Users
           </Typography>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
+
+          {loading ? <div>Loading...</div> : null}
+          {error ? `Error! ${error.message}` : null}
+          {data ? (
             <Typography variant="h3" gutterBottom>
               <b>{data.allUsers.length}</b>
             </Typography>
-          )}
+          ) : null}
         </div>
         <div style={{ flexBasis: "40%", paddingTop: "8px" }}>
           <img src="images/total_users.svg" alt="UserCount" width="100%"></img>

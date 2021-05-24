@@ -35,11 +35,8 @@ export default function WorkersStatus() {
       <Typography variant="h5" gutterBottom>
         Workers Status
       </Typography>
-      {loading && !error ? (
-        <div>Loading...</div>
-      ) : (
-        <WorkerList workers={data.workerList} />
-      )}
+      {loading ? <div>Loading...</div> : null}
+      {data ? <WorkerList workers={data.workerList} /> : null}
       {error ? `Error! ${error.message}` : null}
     </CustomCard>
   );

@@ -24,13 +24,14 @@ export default function TotalRequests() {
           <Typography variant="h6" gutterBottom>
             Total Requests
           </Typography>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
+
+          {loading ? <div>Loading...</div> : null}
+          {error ? `Error! ${error.message}` : null}
+          {data ? (
             <Typography variant="h3" gutterBottom>
               <b>{data.allRequests.length}</b>
             </Typography>
-          )}
+          ) : null}
         </div>
         <div style={{ flexBasis: "40%", paddingTop: "8px" }}>
           <img

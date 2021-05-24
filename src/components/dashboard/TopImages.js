@@ -13,37 +13,28 @@ import CustomCard from "../util/CustomCard";
 
 const Ranking = (props) => {
   const { images } = props;
-  const sorted = images.slice().sort((a, b) => b.usageCount - a.usageCount);
+  const sorted = images
+    .slice()
+    .sort((a, b) => b.usageCount - a.usageCount)
+    .slice(0, 3);
 
   return (
     <List dense>
-      <ListItem disableGutters>
-        <ListItemAvatar>
-          <Avatar variant="rounded" src="images/top1.svg" alt="Top1" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={<b>{sorted[0].name}</b>}
-          secondary={"❤️ ".concat(sorted[0].usageCount)}
-        />
-      </ListItem>
-      <ListItem disableGutters>
-        <ListItemAvatar>
-          <Avatar variant="rounded" src="images/top2.svg" alt="Top2" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={<b>{sorted[1].name}</b>}
-          secondary={"❤️ ".concat(sorted[1].usageCount)}
-        />
-      </ListItem>
-      <ListItem disableGutters>
-        <ListItemAvatar>
-          <Avatar variant="rounded" src="images/top3.svg" alt="Top3" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={<b>{sorted[2].name}</b>}
-          secondary={"❤️ ".concat(sorted[2].usageCount)}
-        />
-      </ListItem>
+      {sorted.map((image, index) => (
+        <ListItem disableGutters>
+          <ListItemAvatar>
+            <Avatar
+              variant="rounded"
+              src={`images/top${index + 1}.svg`}
+              alt={`Top${index + 1}`}
+            />
+          </ListItemAvatar>
+          <ListItemText
+            primary={<b>{sorted[index].name}</b>}
+            secondary={"❤️ ".concat(sorted[index].usageCount)}
+          />
+        </ListItem>
+      ))}
     </List>
   );
 };
@@ -63,7 +54,9 @@ export default function TopImages() {
           alignItems: "center",
         }}
       >
-        {loading ? "Loading" : <Ranking images={data.dockerImages} />}
+        {loading ? <div>Loading...</div> : null}
+        {error ? `Error! ${error.message}` : null}
+        {data ? <Ranking images={data.dockerImages} /> : null}
         <div style={{ flexBasis: "40%", paddingLeft: "5px" }}>
           <img
             src="images/top_images.svg"
