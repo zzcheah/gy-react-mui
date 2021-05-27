@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import DrawerLayout from "../components/layout/DrawerLayout";
 import CustomTable from "../components/util/CustomTable";
@@ -31,6 +32,7 @@ function createData(workers, history) {
 
 const WorkerTable = ({ history }) => {
   const { loading, data, error } = useQuery(LIST_WORKERS);
+  const role = useSelector((state) => state.auth.user.role);
 
   if (loading) return <CircularProgress />;
   if (error) return `Error! ${error.message}`;
@@ -40,7 +42,7 @@ const WorkerTable = ({ history }) => {
     { id: "name", label: "Name" },
     { id: "statusChip", label: "Status", minWidth: 86, align: "center" },
     { id: "runMax", label: "Slots", minWidth: 100, align: "center" },
-    { id: "ipAddress", label: "IP Address" },
+    ...(role === "ADMIN" ? [{ id: "ipAddress", label: "IP Address" }] : []),
   ];
 
   const rows = createData(data.workerList, history);

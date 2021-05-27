@@ -14,12 +14,13 @@ import Toast from "./components/Toast";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
-import { BACKEND_HOST, GENERAL_PAGES } from "./app/constants";
+import { BACKEND_HOST, COMMON_PAGES, GENERAL_PAGES } from "./app/constants";
 import EditProfile from "./pages/subpages/EditProfile";
 import WorkerDetail from "./pages/subpages/WorkerDetail";
 import UnderMaintenance from "./components/util/UnderMaintenance";
 import UserDetail from "./pages/subpages/UserDetail";
 import Dashboard from "./pages/Dashboard";
+import AddRequestForm from "./components/request/AddRequestForm";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -64,7 +65,8 @@ function PrivateRoute({ component, ...rest }) {
 function App() {
   console.log("Rendering App");
 
-  const jwt = useSelector((state) => state.auth.jwt);
+  const auth = useSelector((state) => state.auth);
+  const { jwt, user } = auth;
 
   const httpLink = createHttpLink({
     uri: BACKEND_HOST + "graphql",
@@ -105,11 +107,20 @@ function App() {
             <Toast />
             <LoadingBlur>
               <Switch>
-                <Route exact path="/" component={SignupPage} />
-                {/* <Route exact path="/" component={Dashboard} /> */}
+                <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />
-                {GENERAL_PAGES.map((item, index) => (
+                {user
+                  ? GENERAL_PAGES[user.role].map((item, index) => (
+                      <PrivateRoute
+                        exact
+                        key={index}
+                        path={item.path}
+                        component={item.page}
+                      />
+                    ))
+                  : null}
+                {COMMON_PAGES.map((item, index) => (
                   <PrivateRoute
                     exact
                     key={index}
@@ -117,17 +128,13 @@ function App() {
                     component={item.page}
                   />
                 ))}
-                <PrivateRoute path="/editProfile" component={EditProfile} />
-                <PrivateRoute path="/workers/:id" component={WorkerDetail} />
-                <PrivateRoute path="/users/:id" component={UserDetail} />
-                <PrivateRoute path="/settings" component={UnderMaintenance} />
-
-                {/* <PrivateRoute
-              path="/requestForm"
-              auth={auth}
-              component={RequestForm}
-            /> */}
-                <Redirect to="/dashboard" />
+                {user && user.role === "ADMIN" ? (
+                  <PrivateRoute path="/users/:id" component={UserDetail} />
+                ) : null}
+                {user && user.role === "USER" ? (
+                  <PrivateRoute path="/addRequest" component={AddRequestForm} />
+                ) : null}
+                <Redirect to="/" />
               </Switch>
             </LoadingBlur>
           </BrowserRouter>

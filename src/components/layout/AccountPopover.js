@@ -22,6 +22,7 @@ const AccountPopover = ({ handle }) => {
 
   const handleLogout = () => {
     dispatch(logoutUser(history));
+    history.push("/");
   };
 
   const props = {
@@ -42,7 +43,7 @@ const AccountPopover = ({ handle }) => {
 
   return (
     <Popover {...props.popover}>
-      <Box sx={{ padding: "16px 26px", maxWidth: "250px" }}>
+      <Box sx={{ padding: "16px 26px", maxWidth: "200px" }}>
         <Typography noWrap variant="h6">
           <b>{user.name}</b>
         </Typography>

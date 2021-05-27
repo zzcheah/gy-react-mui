@@ -21,7 +21,7 @@ const Ranking = (props) => {
   return (
     <List dense>
       {sorted.map((image, index) => (
-        <ListItem disableGutters>
+        <ListItem key={index} disableGutters>
           <ListItemAvatar>
             <Avatar
               variant="rounded"

@@ -30,8 +30,7 @@ function Logo() {
   );
 }
 
-function UserCard() {
-  const user = useSelector((state) => state.auth.user);
+function UserCard({ user }) {
   return (
     <Box
       sx={{
@@ -64,6 +63,7 @@ function UserCard() {
 const SideBar = (props) => {
   const { window, mobileOpen, handleDrawerToggle, classes } = props;
   const history = useHistory();
+  const user = useSelector((state) => state.auth.user);
   const path = history.location.pathname;
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -75,13 +75,13 @@ const SideBar = (props) => {
   const drawer = (
     <div>
       <Logo />
-      <UserCard />
+      <UserCard user={user} />
 
       <List sx={{ "& div": { pl: 2 } }}>
         <ListItem>
           <ListItemText primary={<strong>GENERAL</strong>} />
         </ListItem>
-        {GENERAL_PAGES.map((item, index) => (
+        {GENERAL_PAGES[user.role].map((item, index) => (
           <ListItem
             button
             key={index}

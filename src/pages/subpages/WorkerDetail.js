@@ -12,12 +12,9 @@ const WorkerDetail = (props) => {
   return (
     <DrawerLayout>
       <Container sx={{ mb: 6 }}>
-        {loading && !error ? (
-          "loading..."
-        ) : (
-          <WorkerInfo workers={data.workerList} id={id} />
-        )}
+        {loading ? <div>Loading...</div> : null}
         {error ? `Error! ${error.message}` : null}
+        {data ? <WorkerInfo workers={data.workerList} id={id} /> : null}
       </Container>
     </DrawerLayout>
   );

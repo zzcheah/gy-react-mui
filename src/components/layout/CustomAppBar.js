@@ -6,9 +6,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { useState } from "react";
-import NotificationPopover from "./NotificaitonPopover";
+import { useEffect, useState } from "react";
+import NotificationPopover from "./NotificationPopover";
 import AccountPopover from "./AccountPopover";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { NOTIFICATION_LIST } from "../../graphql/query";
 
 const recolor = {
   color: "rgb(33, 43, 54)",
@@ -18,6 +20,11 @@ const CustomAppBar = (props) => {
   const { classes, handleDrawerToggle } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
+  // const [read, setRead] = useState([]);
+  // const [unread, setUnread] = useState([]);
+  const [myQueryExecutor, { loading, error, data }] = useLazyQuery(
+    NOTIFICATION_LIST
+  );
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -42,6 +49,20 @@ const CustomAppBar = (props) => {
     handleMenuClose,
     anchorEl,
   };
+
+  useEffect(() => {
+    myQueryExecutor();
+  }, [myQueryExecutor]);
+
+  var read = [];
+  var unread = [];
+  if (data) {
+    data.notificationList.forEach((item) => {
+      if (item.isRead) {
+        read.push(item);
+      } else unread.push(item);
+    });
+  }
 
   return (
     <div>
@@ -68,7 +89,7 @@ const CustomAppBar = (props) => {
               onClick={handleMenuOpen}
               sx={recolor}
             >
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={unread.length} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -87,7 +108,10 @@ const CustomAppBar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <NotificationPopover handle={notificationHandle} />
+      <NotificationPopover
+        handle={notificationHandle}
+        data={{ unread, read }}
+      />
       <AccountPopover handle={accountHandle} />
     </div>
   );

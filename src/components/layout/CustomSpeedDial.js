@@ -9,22 +9,22 @@ import { useHistory } from "react-router-dom";
 import AddWorkerDialog from "../dialogs/AddWorkerDialog";
 import { useState } from "react";
 import AddImageDialog from "../dialogs/AddImageDialog";
+import { useSelector } from "react-redux";
 
 const actions = [
   {
     icon: <QueuePlayNextIcon />,
     name: "Add Task Worker",
-    path: "/notifications",
   },
   {
     icon: <AddPhotoAlternateIcon />,
     name: "Add Docker Image",
-    path: "/dashboard",
   },
 ];
 
 export default function CustomSpeedDial() {
   const [currentDialog, setCurrentDialog] = useState(null);
+  const role = useSelector((state) => state.auth.user.role);
   const history = useHistory();
 
   const handleClose = () => {
@@ -35,7 +35,7 @@ export default function CustomSpeedDial() {
     <div>
       <Box
         sx={{
-          height: 200,
+          height: role === "ADMIN" ? 200 : 150,
           transform: "translateZ(0px)",
           flexGrow: 1,
           position: "fixed",
@@ -47,14 +47,22 @@ export default function CustomSpeedDial() {
           ariaLabel="SpeedDial basic example"
           icon={<SpeedDialIcon openIcon={<EditIcon />} />}
         >
-          {actions.map((action, index) => (
+          {role === "USER" ? (
             <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={() => setCurrentDialog(index)}
+              icon={<AddPhotoAlternateIcon />}
+              tooltipTitle={"Add Request"}
+              onClick={() => history.push("/addRequest")}
             />
-          ))}
+          ) : (
+            actions.map((action, index) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={() => setCurrentDialog(index)}
+              />
+            ))
+          )}
         </SpeedDial>
       </Box>
       <AddWorkerDialog open={currentDialog === 0} handleClose={handleClose} />
