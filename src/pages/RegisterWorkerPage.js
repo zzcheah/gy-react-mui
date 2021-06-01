@@ -1,28 +1,16 @@
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../slices/authSlice";
-import { useState } from "react";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        GPU Yard
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import AuthHeader from "../components/auth/AuthHeader";
+import {
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { submitWorkerApplication } from "../slices/thunks";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,14 +27,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignupForm = () => {
+export default function RegisterWorkerPage() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    name: "",
+    maxTasks: "",
     email: "",
-    password: "",
+    name: "",
   });
 
   const handleChange = (e) => {
@@ -60,7 +48,7 @@ const SignupForm = () => {
     e.preventDefault();
     console.log(input);
     dispatch(
-      registerUser({
+      submitWorkerApplication({
         input,
         history,
       })
@@ -68,52 +56,51 @@ const SignupForm = () => {
   };
 
   return (
-    <Container component="main" maxWidth="sm">
-      <div className={classes.paper}>
+    <div>
+      <AuthHeader />
+      <br />
+      <Container component="main" maxWidth="sm" sx={{ mt: 4 }}>
         <Typography component="h1" variant="h5" gutterBottom>
-          Get started
+          New Worker Application
         </Typography>
         <Typography component="h2" variant="body2" gutterBottom>
-          Enter your details below.
+          Register your interest in setting up a task worker.
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="name"
                 name="name"
                 variant="outlined"
                 required
                 fullWidth
                 id="name"
-                label="Name"
+                label="Worker Nickname"
                 autoFocus
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={8}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Your Email Address"
                 name="email"
                 type="email"
+                helperText="We will send you the worker id once it is approved"
                 autoComplete="email"
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={4}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name="maxTasks"
+                label="Max Concurrent Jobs"
+                id="maxTasks"
                 onChange={handleChange}
               />
             </Grid>
@@ -131,23 +118,7 @@ const SignupForm = () => {
             </Button>
           </div>
         </form>
-        <Grid container>
-          <Grid item>
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => history.push("/login")}
-            >
-              Already have an account? Sign in
-            </Link>
-          </Grid>
-        </Grid>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+      </Container>
+    </div>
   );
-};
-
-export default SignupForm;
+}

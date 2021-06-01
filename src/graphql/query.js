@@ -21,6 +21,31 @@ export const REQUEST_COUNTS = gql`
   }
 `;
 
+export const WORKER_APPLICATIONS = gql`
+  query WorkerApplications {
+    workerApplications {
+      id
+      name
+      maxTasks
+      ipAddress
+      email
+      createdAt
+    }
+  }
+`;
+
+export const IMAGE_REQUESTS = gql`
+  query ImageRequests {
+    imageRequests {
+      id
+      image
+      tag
+      remark
+      createdAt
+    }
+  }
+`;
+
 export const NOTIFICATION_LIST = gql`
   query NotificationList {
     notificationList {

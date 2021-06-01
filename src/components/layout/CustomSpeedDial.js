@@ -24,6 +24,7 @@ const actions = [
 
 export default function CustomSpeedDial() {
   const [currentDialog, setCurrentDialog] = useState(null);
+  // @ts-ignore
   const role = useSelector((state) => state.auth.user.role);
   const history = useHistory();
 

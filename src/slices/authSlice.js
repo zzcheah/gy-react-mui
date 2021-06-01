@@ -16,6 +16,7 @@ if (localStorage.auth) {
     const { profile, jwt } = JSON.parse(auth);
     const current_time = new Date().getTime() / 1000;
     const decoded = jwt_decode(jwt);
+    // @ts-ignore
     if (current_time < decoded.exp) {
       initialState = { user: profile, jwt };
     }

@@ -29,6 +29,17 @@ export const ADD_NEW_IMAGE = gql`
     }
   }
 `;
+export const ADD_IMAGE_REQUEST = gql`
+  mutation AddImageRequest($input: AddImageRequestInput!) {
+    addImageRequest(input: $input) {
+      id
+      image
+      tag
+      remark
+      createdAt
+    }
+  }
+`;
 
 export const SET_READ_NOTIFICATION = gql`
   mutation SetReadNotification($input: String!) {

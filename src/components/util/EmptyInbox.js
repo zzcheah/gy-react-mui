@@ -1,11 +1,13 @@
-import { Box, Typography } from "@material-ui/core";
-import CustomCard from "../util/CustomCard";
+import { Typography, Box } from "@material-ui/core";
+import React from "react";
+import CustomCard from "./CustomCard";
 
-export default function DockerImageRequests() {
+const EmptyInbox = ({ title, offset }) => {
+  console.log(offset);
   return (
-    <CustomCard>
+    <div>
       <Typography variant="h6" gutterBottom>
-        Docker Image Request
+        {title}
       </Typography>
       <Box
         sx={{
@@ -14,10 +16,7 @@ export default function DockerImageRequests() {
           alignItems: "center",
         }}
       >
-        <div style={{ padding: "5px" }}>
-          <Typography>All Checked ✔️✔️</Typography>
-          <Typography>No new request 🙂🙂</Typography>
-        </div>
+        <div style={{ padding: "5px" }}>{offset}</div>
 
         <div style={{ flexBasis: "40%", paddingLeft: "5px" }}>
           <img
@@ -27,6 +26,8 @@ export default function DockerImageRequests() {
           ></img>
         </div>
       </Box>
-    </CustomCard>
+    </div>
   );
-}
+};
+
+export default EmptyInbox;

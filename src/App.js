@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import {
   ApolloClient,
@@ -15,12 +16,9 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
 import { BACKEND_HOST, COMMON_PAGES, GENERAL_PAGES } from "./app/constants";
-import EditProfile from "./pages/subpages/EditProfile";
-import WorkerDetail from "./pages/subpages/WorkerDetail";
-import UnderMaintenance from "./components/util/UnderMaintenance";
 import UserDetail from "./pages/subpages/UserDetail";
-import Dashboard from "./pages/Dashboard";
 import AddRequestForm from "./components/request/AddRequestForm";
+import RegisterWorkerPage from "./pages/RegisterWorkerPage";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -110,6 +108,7 @@ function App() {
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />
+                <Route exact path="/newWorker" component={RegisterWorkerPage} />
                 {user
                   ? GENERAL_PAGES[user.role].map((item, index) => (
                       <PrivateRoute
