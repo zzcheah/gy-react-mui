@@ -10,17 +10,8 @@ import AddWorkerDialog from "../dialogs/AddWorkerDialog";
 import { useState } from "react";
 import AddImageDialog from "../dialogs/AddImageDialog";
 import { useSelector } from "react-redux";
-
-const actions = [
-  {
-    icon: <QueuePlayNextIcon />,
-    name: "Add Task Worker",
-  },
-  {
-    icon: <AddPhotoAlternateIcon />,
-    name: "Add Docker Image",
-  },
-];
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import NewIRDialog from "../dialogs/NewIRDialog";
 
 export default function CustomSpeedDial() {
   const [currentDialog, setCurrentDialog] = useState(null);
@@ -32,11 +23,36 @@ export default function CustomSpeedDial() {
     setCurrentDialog(null);
   };
 
+  const admin_actions = [
+    {
+      icon: <QueuePlayNextIcon />,
+      name: "Add Task Worker",
+      onClick: () => setCurrentDialog(0),
+    },
+    {
+      icon: <AddPhotoAlternateIcon />,
+      name: "Add Docker Image",
+      onClick: () => setCurrentDialog(1),
+    },
+  ];
+
+  const user_actions = [
+    {
+      icon: <AddPhotoAlternateIcon />,
+      name: "Request for New Image",
+      onClick: () => setCurrentDialog(2),
+    },
+    {
+      icon: <ListAltIcon />,
+      name: "Add Request",
+      onClick: () => history.push("/addRequest"),
+    },
+  ];
   return (
     <div>
       <Box
         sx={{
-          height: role === "ADMIN" ? 200 : 150,
+          height: 200,
           transform: "translateZ(0px)",
           flexGrow: 1,
           position: "fixed",
@@ -48,26 +64,28 @@ export default function CustomSpeedDial() {
           ariaLabel="SpeedDial basic example"
           icon={<SpeedDialIcon openIcon={<EditIcon />} />}
         >
-          {role === "USER" ? (
-            <SpeedDialAction
-              icon={<AddPhotoAlternateIcon />}
-              tooltipTitle={"Add Request"}
-              onClick={() => history.push("/addRequest")}
-            />
-          ) : (
-            actions.map((action, index) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-                onClick={() => setCurrentDialog(index)}
-              />
-            ))
-          )}
+          {role === "USER"
+            ? user_actions.map((action, index) => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={action.onClick}
+                />
+              ))
+            : admin_actions.map((action, index) => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={action.onClick}
+                />
+              ))}
         </SpeedDial>
       </Box>
       <AddWorkerDialog open={currentDialog === 0} handleClose={handleClose} />
       <AddImageDialog open={currentDialog === 1} handleClose={handleClose} />
+      <NewIRDialog open={currentDialog === 2} handleClose={handleClose} />
     </div>
   );
 }

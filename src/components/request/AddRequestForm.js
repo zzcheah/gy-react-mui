@@ -22,6 +22,7 @@ import { BACKEND_HOST } from "../../app/constants";
 import { GET_DOCKER_IMAGES } from "../../graphql/query";
 import JSONInput from "react-json-editor-ajrm";
 import locale from "react-json-editor-ajrm/locale/en";
+import { useHistory } from "react-router-dom";
 
 const upload = (file, onUploadProgress) => {
   let formData = new FormData();
@@ -40,6 +41,7 @@ export default function AddRequestForm() {
   const { loading, error, data } = useQuery(GET_DOCKER_IMAGES);
   const [createRequest] = useMutation(CREATE_REQUEST);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [state, setState] = useState({
     progress: 0,
     fileInfo: "",
@@ -62,7 +64,6 @@ export default function AddRequestForm() {
       file,
       fileInfo,
     });
-    console.log(event.target.files);
   };
 
   const uploadFile = (e) => {
@@ -84,7 +85,6 @@ export default function AddRequestForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(state);
     dispatch(toggleLoading());
     uploadFile()
       .then((data) => {
@@ -93,7 +93,7 @@ export default function AddRequestForm() {
         const input = {
           name: "haha",
           image: state.image + ":" + state.tag,
-          param: btoa(state.rawParam),
+          param: Buffer.from(JSON.stringify(state.rawParam)).toString("base64"),
           inputFiles: [data.data],
         };
         console.log(input);
@@ -107,6 +107,7 @@ export default function AddRequestForm() {
           })
         );
         dispatch(toggleLoading());
+        history.push("/dashbaord");
       })
       .catch((err) => {
         console.log(err);
@@ -138,6 +139,7 @@ export default function AddRequestForm() {
           <FormControl sx={{ minWidth: 400, m: 2 }}>
             <InputLabel>Docker Image</InputLabel>
             <Select
+              required
               value={state.index}
               onChange={(e) => {
                 const index = e.target.value;
@@ -160,6 +162,7 @@ export default function AddRequestForm() {
           <FormControl sx={{ minWidth: 300, m: 2 }}>
             <InputLabel>Tags</InputLabel>
             <Select
+              required
               value={state.tag}
               onChange={(e) => {
                 setState({ ...state, tag: e.target.value });
@@ -195,8 +198,7 @@ export default function AddRequestForm() {
               locale={locale}
               height="420px"
               onChange={(e) => {
-                // console.log(e);
-                setState({ ...state, rawParam: e.plainText });
+                setState({ ...state, rawParam: e.jsObject });
               }}
             />
           </FormControl>
@@ -220,6 +222,7 @@ export default function AddRequestForm() {
           <Button
             type="submit"
             variant="contained"
+            // @ts-ignore
             color="success"
             size="large"
             sx={{ float: "right", mt: 3 }}

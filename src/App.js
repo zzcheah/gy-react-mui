@@ -19,6 +19,7 @@ import { BACKEND_HOST, COMMON_PAGES, GENERAL_PAGES } from "./app/constants";
 import UserDetail from "./pages/subpages/UserDetail";
 import AddRequestForm from "./components/request/AddRequestForm";
 import RegisterWorkerPage from "./pages/RegisterWorkerPage";
+import RequestDetail from "./pages/subpages/RequestDetail";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -96,6 +97,19 @@ function App() {
     // defaultOptions: defaultOptions,
   });
 
+  const user_routes = [
+    {
+      route: (
+        <PrivateRoute key={0} path="/addRequest" component={AddRequestForm} />
+      ),
+    },
+    {
+      route: (
+        <PrivateRoute key={1} path="/requests/:id" component={RequestDetail} />
+      ),
+    },
+  ];
+
   return (
     <>
       <ApolloProvider client={client}>
@@ -130,9 +144,9 @@ function App() {
                 {user && user.role === "ADMIN" ? (
                   <PrivateRoute path="/users/:id" component={UserDetail} />
                 ) : null}
-                {user && user.role === "USER" ? (
-                  <PrivateRoute path="/addRequest" component={AddRequestForm} />
-                ) : null}
+                {user && user.role === "USER"
+                  ? user_routes.map((item) => item.route)
+                  : null}
                 <Redirect to="/" />
               </Switch>
             </LoadingBlur>

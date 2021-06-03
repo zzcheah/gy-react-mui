@@ -7,10 +7,13 @@ export const MY_REQUESTS = gql`
       name
       status
       createdAt
+      title
       image
-      user {
-        email
-      }
+      encodedParam
+      inputFiles
+      outputFiles
+      assignedTo
+      remark
     }
   }
 `;

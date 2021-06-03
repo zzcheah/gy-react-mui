@@ -19,6 +19,7 @@ function createData(workers, history) {
     const statusChip = (
       <Chip
         label={status}
+        // @ts-ignore
         color={status === "Active" ? "success" : "default"}
       />
     );
@@ -32,10 +33,11 @@ function createData(workers, history) {
 
 const WorkerTable = ({ history }) => {
   const { loading, data, error } = useQuery(LIST_WORKERS);
+  // @ts-ignore
   const role = useSelector((state) => state.auth.user.role);
 
   if (loading) return <CircularProgress />;
-  if (error) return `Error! ${error.message}`;
+  if (error) return <div>`Error! ${error.message}`</div>;
 
   const columns = [
     { id: "id", label: "Worker ID" },

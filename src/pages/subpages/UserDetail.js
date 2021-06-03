@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Chip, Container, Divider, Grid, Typography } from "@material-ui/core";
+import { Chip, Container, Divider, Typography } from "@material-ui/core";
 import DrawerLayout from "../../components/layout/DrawerLayout";
 import CustomCard from "../../components/util/CustomCard";
 import { GET_ALL_USERS } from "../../graphql/query";
@@ -50,6 +50,7 @@ const UserInfo = (props) => {
         <Typography variant="h6">Status:</Typography>
         <Chip
           label={status ? status : "Checking"}
+          // @ts-ignore
           color={status === "Active" ? "success" : "default"}
         />
 

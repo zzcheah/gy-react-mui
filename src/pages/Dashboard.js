@@ -1,7 +1,6 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ImageRequests from "../components/dashboard/ImageRequests";
 import TopImages from "../components/dashboard/TopImages";
 import TotalIssues from "../components/dashboard/TotalIssues";
@@ -11,10 +10,11 @@ import WelcomeBack from "../components/dashboard/WelcomeBack";
 import WorkerApplication from "../components/dashboard/WorkerApplication";
 import WorkersStatus from "../components/dashboard/WorkersStatus";
 import DrawerLayout from "../components/layout/DrawerLayout";
+import MyRequestsList from "../components/request/MyRequestList";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  // @ts-ignore
+  const role = useSelector((state) => state.auth.user.role);
 
   return (
     <DrawerLayout>
@@ -27,22 +27,31 @@ const Dashboard = () => {
             <WorkersStatus />
           </Grid>
 
-          <Grid item xs={12} lg={6}>
-            <WorkerApplication />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <ImageRequests />
-          </Grid>
+          {role === "ADMIN" ? (
+            <>
+              <Grid item xs={12} lg={6}>
+                <WorkerApplication />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <ImageRequests />
+              </Grid>
 
-          <Grid item xs={12} lg={4}>
-            <TotalUsers />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <TotalRequests />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <TotalIssues />
-          </Grid>
+              <Grid item xs={12} lg={4}>
+                <TotalUsers />
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <TotalRequests />
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <TotalIssues />
+              </Grid>
+            </>
+          ) : null}
+          {role === "USER" ? (
+            <Grid item xs={12} lg={6}>
+              <MyRequestsList />
+            </Grid>
+          ) : null}
 
           <Grid item xs={12} lg={6}>
             <TopImages />
