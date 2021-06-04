@@ -10,8 +10,8 @@ import {
   Select,
   Typography,
 } from "@material-ui/core";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CREATE_REQUEST } from "../../graphql/mutation";
 import { addToast, toggleLoading } from "../../slices/appSlice";
 import DrawerLayout from "../layout/DrawerLayout";
@@ -20,7 +20,7 @@ import { BACKEND_HOST } from "../../app/constants";
 import { GET_DOCKER_IMAGES } from "../../graphql/query";
 import JSONInput from "react-json-editor-ajrm";
 import locale from "react-json-editor-ajrm/locale/en";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const upload = (file, onUploadProgress) => {
   let formData = new FormData();
@@ -40,6 +40,8 @@ export default function AddRequestForm() {
   const [createRequest] = useMutation(CREATE_REQUEST);
   const dispatch = useDispatch();
   const history = useHistory();
+  // @ts-ignore
+  const userStatus = useSelector((state) => state.auth.user.status);
   const [state, setState] = useState({
     progress: 0,
     fileInfo: "",
@@ -125,6 +127,11 @@ export default function AddRequestForm() {
   const allImages = data ? data.dockerImages : [];
 
   const allTags = state.index !== "" ? data.dockerImages[state.index].tags : [];
+
+  if (userStatus !== "Active") {
+    alert("User is not allowed to make request until approved by admin");
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <DrawerLayout>
