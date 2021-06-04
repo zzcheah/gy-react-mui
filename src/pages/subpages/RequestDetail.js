@@ -44,7 +44,7 @@ const RequestInfo = (props) => {
 
   console.log(atob(encodedParam));
 
-  // const decoded = JSON.stringify(JSON.parse(atob(encodedParam)), null, 2);
+  const decoded = JSON.stringify(JSON.parse(atob(encodedParam)), null, 2);
 
   return (
     <div>
@@ -77,16 +77,32 @@ const RequestInfo = (props) => {
           {STATUS_CHIPS[status]
             ? STATUS_CHIPS[status]
             : STATUS_CHIPS["DEFAULT"]}
-          {/* <Chip
-          label={status ? status : "Checking"}
-          // @ts-ignore
-          color={status === "Active" ? "success" : "default"}
-        /> */}
+
           <CustomDivider />
           <Typography variant="h6" gutterBottom>
             Assigned To:
           </Typography>
           <Typography variant="body1">{assignedTo}</Typography>
+
+          {outputFiles && outputFiles.length === 1 ? (
+            <div>
+              <CustomDivider />
+              <Typography variant="h6" gutterBottom>
+                Output File:
+              </Typography>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  window.open(
+                    BACKEND_HOST + "files/" + outputFiles[0],
+                    "_blank"
+                  );
+                }}
+              >
+                Download
+              </Button>
+            </div>
+          ) : null}
 
           <CustomDivider />
           <Typography variant="h6" gutterBottom>
@@ -98,7 +114,9 @@ const RequestInfo = (props) => {
           <Typography variant="h6" gutterBottom>
             Parameters:
           </Typography>
-          <Typography variant="body1">{encodedParam}</Typography>
+          <Typography variant="body1" component="pre">
+            {decoded}
+          </Typography>
 
           {remark ? (
             <div>
@@ -107,24 +125,6 @@ const RequestInfo = (props) => {
                 Remark:
               </Typography>
               <Typography variant="body1">{remark}</Typography>
-            </div>
-          ) : null}
-          {outputFiles && outputFiles.length === 1 ? (
-            <div>
-              <CustomDivider />
-              <Typography variant="h6" gutterBottom>
-                Output File:
-              </Typography>
-              <Button
-                onClick={() => {
-                  window.open(
-                    BACKEND_HOST + "files/" + outputFiles[0],
-                    "_blank"
-                  );
-                }}
-              >
-                Download
-              </Button>
             </div>
           ) : null}
         </Box>

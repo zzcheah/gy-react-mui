@@ -1,12 +1,5 @@
 import { useQuery } from "@apollo/client";
-import {
-  Button,
-  Chip,
-  Divider,
-  List,
-  ListItem,
-  Typography,
-} from "@material-ui/core";
+import { Chip, List, ListItem, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { LIST_WORKERS } from "../../graphql/query";
 import CustomCard from "../util/CustomCard";
@@ -58,6 +51,7 @@ const WorkerList = ({ workers }) => {
           <Typography>{worker.name}</Typography>
           <Chip
             label={worker.status ? worker.status : "Checking"}
+            // @ts-ignore
             color={worker.status === "Active" ? "success" : "default"}
             style={{
               minWidth: "80px",

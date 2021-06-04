@@ -1,6 +1,5 @@
 import { Typography, Box } from "@material-ui/core";
 import React from "react";
-import CustomCard from "./CustomCard";
 
 const EmptyInbox = ({ title, offset }) => {
   console.log(offset);

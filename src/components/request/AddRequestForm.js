@@ -8,7 +8,6 @@ import {
   LinearProgress,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import { useState } from "react";
@@ -16,7 +15,6 @@ import { useDispatch } from "react-redux";
 import { CREATE_REQUEST } from "../../graphql/mutation";
 import { addToast, toggleLoading } from "../../slices/appSlice";
 import DrawerLayout from "../layout/DrawerLayout";
-import { DropzoneArea } from "material-ui-dropzone";
 import axios from "axios";
 import { BACKEND_HOST } from "../../app/constants";
 import { GET_DOCKER_IMAGES } from "../../graphql/query";
@@ -38,7 +36,7 @@ const upload = (file, onUploadProgress) => {
 };
 
 export default function AddRequestForm() {
-  const { loading, error, data } = useQuery(GET_DOCKER_IMAGES);
+  const { data } = useQuery(GET_DOCKER_IMAGES);
   const [createRequest] = useMutation(CREATE_REQUEST);
   const dispatch = useDispatch();
   const history = useHistory();

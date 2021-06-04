@@ -1,4 +1,5 @@
-import { useApolloClient, useMutation, useQuery } from "@apollo/client";
+// @ts-nocheck
+import { useMutation } from "@apollo/client";
 import {
   Avatar,
   Box,
@@ -13,7 +14,6 @@ import {
 import { Info } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { SET_READ_NOTIFICATION } from "../../graphql/mutation";
-import { NOTIFICATION_LIST } from "../../graphql/query";
 
 const NotificationPopover = ({ handle, data }) => {
   const { open, anchorEl, handleMenuClose } = handle;

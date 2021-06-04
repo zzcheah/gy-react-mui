@@ -35,7 +35,7 @@ const DataRender = ({ data }) => {
           }}
         >
           <img
-            src="images/worker_application.svg"
+            src="images/image_request.svg"
             alt="RequestCount"
             width="100%"
           ></img>
@@ -50,7 +50,7 @@ const DataRender = ({ data }) => {
             }}
           >
             <Typography variant="h6" gutterBottom>
-              New Worker Applications
+              Image Requests
             </Typography>
             <div>
               <Box sx={{ p: 1 }}>
@@ -64,7 +64,7 @@ const DataRender = ({ data }) => {
               <Box sx={{ pt: 1 }}>
                 <Button
                   component={Link}
-                  to="/newWorker"
+                  to="/imageRequests"
                   sx={{ float: "right" }}
                 >
                   View All

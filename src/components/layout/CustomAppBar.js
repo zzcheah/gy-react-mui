@@ -9,7 +9,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useEffect, useState } from "react";
 import NotificationPopover from "./NotificationPopover";
 import AccountPopover from "./AccountPopover";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { NOTIFICATION_LIST } from "../../graphql/query";
 
 const recolor = {
@@ -22,9 +22,7 @@ const CustomAppBar = (props) => {
   const [activeMenu, setActiveMenu] = useState(null);
   // const [read, setRead] = useState([]);
   // const [unread, setUnread] = useState([]);
-  const [myQueryExecutor, { loading, error, data }] = useLazyQuery(
-    NOTIFICATION_LIST
-  );
+  const [myQueryExecutor, { data }] = useLazyQuery(NOTIFICATION_LIST);
 
   const handleMenuClose = () => {
     setAnchorEl(null);

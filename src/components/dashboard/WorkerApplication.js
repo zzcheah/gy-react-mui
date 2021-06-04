@@ -64,7 +64,7 @@ const DataRender = ({ data }) => {
               <Box sx={{ pt: 1 }}>
                 <Button
                   component={Link}
-                  to="/newWorker"
+                  to="/workerApplications"
                   sx={{ float: "right" }}
                 >
                   View All

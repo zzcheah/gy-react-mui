@@ -5,7 +5,6 @@ import {
   Container,
   Typography,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import DrawerLayout from "../components/layout/DrawerLayout";
 import CustomTable from "../components/util/CustomTable";
@@ -18,6 +17,7 @@ function createData(users, history) {
     const statusChip = (
       <Chip
         label={status}
+        // @ts-ignore
         color={status === "Active" ? "success" : "default"}
       />
     );
@@ -33,7 +33,7 @@ const UserTable = ({ history }) => {
   const { loading, data, error } = useQuery(GET_ALL_USERS);
 
   if (loading) return <CircularProgress />;
-  if (error) return `Error! ${error.message}`;
+  if (error) return <div>`Error! ${error.message}`</div>;
 
   const columns = [
     { id: "id", label: "User ID" },
@@ -50,7 +50,6 @@ const UserTable = ({ history }) => {
 };
 
 const UsersPage = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   return (

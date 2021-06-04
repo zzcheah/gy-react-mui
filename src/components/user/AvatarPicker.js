@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton, Paper } from "@material-ui/core";
+import { Avatar, IconButton, Paper } from "@material-ui/core";
 
 const styles = {
   root: {

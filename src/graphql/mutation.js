@@ -19,6 +19,22 @@ export const REGISTER_WORKER = gql`
   }
 `;
 
+export const APPROVE_WORKER = gql`
+  mutation ApproveWorker($input: String!) {
+    approveWorker(input: $input) {
+      id
+    }
+  }
+`;
+
+export const APPROVE_IMAGE = gql`
+  mutation ApproveImage($input: String!) {
+    approveImage(input: $input) {
+      id
+    }
+  }
+`;
+
 export const ADD_NEW_IMAGE = gql`
   mutation AddNewImage($input: AddNewImageInput!) {
     addNewImage(input: $input) {

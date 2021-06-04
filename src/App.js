@@ -20,6 +20,8 @@ import UserDetail from "./pages/subpages/UserDetail";
 import AddRequestForm from "./components/request/AddRequestForm";
 import RegisterWorkerPage from "./pages/RegisterWorkerPage";
 import RequestDetail from "./pages/subpages/RequestDetail";
+import WorkerApplicationsPage from "./components/worker/WorkerApplicationsPage";
+import ImageRequestsPage from "./components/docker_images/ImageRequestsPage";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -97,6 +99,30 @@ function App() {
     // defaultOptions: defaultOptions,
   });
 
+  const admin_routes = [
+    {
+      route: <PrivateRoute key={0} path="/users/:id" component={UserDetail} />,
+    },
+    {
+      route: (
+        <PrivateRoute
+          key={1}
+          path="/imageRequests"
+          component={ImageRequestsPage}
+        />
+      ),
+    },
+    {
+      route: (
+        <PrivateRoute
+          key={2}
+          path="/workerApplications"
+          component={WorkerApplicationsPage}
+        />
+      ),
+    },
+  ];
+
   const user_routes = [
     {
       route: (
@@ -141,9 +167,9 @@ function App() {
                     component={item.page}
                   />
                 ))}
-                {user && user.role === "ADMIN" ? (
-                  <PrivateRoute path="/users/:id" component={UserDetail} />
-                ) : null}
+                {user && user.role === "ADMIN"
+                  ? admin_routes.map((item) => item.route)
+                  : null}
                 {user && user.role === "USER"
                   ? user_routes.map((item) => item.route)
                   : null}
