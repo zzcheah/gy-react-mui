@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/gy-react-mui/static/css/main.9fd6c884.chunk.css",
-    "main.js": "/gy-react-mui/static/js/main.32c00ef4.chunk.js",
-    "main.js.map": "/gy-react-mui/static/js/main.32c00ef4.chunk.js.map",
+    "main.js": "/gy-react-mui/static/js/main.d79c4e58.chunk.js",
+    "main.js.map": "/gy-react-mui/static/js/main.d79c4e58.chunk.js.map",
     "runtime-main.js": "/gy-react-mui/static/js/runtime-main.107a28ce.js",
     "runtime-main.js.map": "/gy-react-mui/static/js/runtime-main.107a28ce.js.map",
     "static/js/2.06ef8dfd.chunk.js": "/gy-react-mui/static/js/2.06ef8dfd.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.107a28ce.js",
     "static/js/2.06ef8dfd.chunk.js",
     "static/css/main.9fd6c884.chunk.css",
-    "static/js/main.32c00ef4.chunk.js"
+    "static/js/main.d79c4e58.chunk.js"
   ]
 }
