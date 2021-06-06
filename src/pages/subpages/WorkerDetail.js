@@ -34,30 +34,34 @@ const WorkerInfo = (props) => {
       <CustomCard>
         <Typography variant="h6">Task Worker ID:</Typography>
         <Typography variant="body1">{id}</Typography>
-        <CustomDivider />
 
+        <CustomDivider />
         <Typography variant="h6">Name:</Typography>
         <Typography variant="body1">{name}</Typography>
-        <CustomDivider />
 
+        <CustomDivider />
         <Typography variant="h6">Status:</Typography>
         <Chip
           label={status ? status : "Checking"}
           // @ts-ignore
           color={status === "Active" ? "success" : "default"}
         />
-        <CustomDivider />
 
+        <CustomDivider />
         <Typography variant="h6">Running Task:</Typography>
         <Typography variant="body1">{runningTasks.length}</Typography>
-        <CustomDivider />
 
+        <CustomDivider />
         <Typography variant="h6">Max Concurrent Tasks:</Typography>
         <Typography variant="body1">{maxTasks}</Typography>
-        <CustomDivider />
 
-        <Typography variant="h6">IP Address:</Typography>
-        <Typography variant="body1">{ipAddress}</Typography>
+        {ipAddress ? (
+          <div>
+            <CustomDivider />
+            <Typography variant="h6">IP Address:</Typography>
+            <Typography variant="body1">{ipAddress}</Typography>
+          </div>
+        ) : null}
       </CustomCard>
     </div>
   );

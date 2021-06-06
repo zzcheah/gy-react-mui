@@ -8,6 +8,7 @@ import {
   LinearProgress,
   MenuItem,
   Select,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
@@ -43,6 +44,7 @@ export default function AddRequestForm() {
   // @ts-ignore
   const userStatus = useSelector((state) => state.auth.user.status);
   const [state, setState] = useState({
+    name: "Untitled",
     progress: 0,
     fileInfo: "",
     image: "",
@@ -91,7 +93,7 @@ export default function AddRequestForm() {
         console.log("successfully uploading file, creating request");
         console.log(data);
         const input = {
-          name: "haha",
+          name: state.name,
           image: state.image + ":" + state.tag,
           param: Buffer.from(JSON.stringify(state.rawParam)).toString("base64"),
           inputFiles: [data.data],
@@ -141,6 +143,22 @@ export default function AddRequestForm() {
         </Typography>
 
         <form onSubmit={handleSubmit}>
+          <TextField
+            autoComplete="name"
+            name="name"
+            required
+            variant="standard"
+            id="name"
+            label="Name"
+            value={state.name}
+            autoFocus
+            onChange={(e) => {
+              setState({ ...state, name: e.target.value });
+            }}
+            sx={{ m: 2, width: 450 }}
+          />
+          <br />
+
           <FormControl sx={{ minWidth: 400, m: 2 }}>
             <InputLabel>Docker Image</InputLabel>
             <Select
@@ -162,7 +180,6 @@ export default function AddRequestForm() {
               ))}
             </Select>
           </FormControl>
-          {/* <br /> */}
 
           <FormControl sx={{ minWidth: 300, m: 2 }}>
             <InputLabel>Tags</InputLabel>
