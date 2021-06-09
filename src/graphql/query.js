@@ -71,6 +71,7 @@ export const GET_DOCKER_IMAGES = gql`
       tags {
         id
         tag
+        schema64
         description
       }
       usageCount

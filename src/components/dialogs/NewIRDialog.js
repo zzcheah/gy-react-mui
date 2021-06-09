@@ -5,30 +5,38 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Grid } from "@material-ui/core";
-import { useState } from "react";
+import { FormControl, Grid, Typography } from "@material-ui/core";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_IMAGE_REQUEST } from "../../graphql/mutation";
 import { useDispatch } from "react-redux";
 import { addToast, toggleLoading } from "../../slices/appSlice";
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 const defaultValue = {
   image: "",
   tag: "",
   remark: "",
+  schema64: "",
 };
 
 export default function NewIRDialog(props) {
   const dispatch = useDispatch();
   const { open, handleClose } = props;
   const [input, setInput] = useState(defaultValue);
+  const [jsSchema, setJsSchema] = useState({});
   const [addImageRequest] = useMutation(ADD_IMAGE_REQUEST);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     // console.log(input);
     dispatch(toggleLoading());
-    addImageRequest({ variables: { input } })
+
+    const schema64 = Buffer.from(JSON.stringify(jsSchema)).toString("base64");
+    const temp = { ...input, schema64 };
+    addImageRequest({ variables: { input: temp } })
       .then(() => {
         dispatch(
           addToast({
@@ -70,8 +78,8 @@ export default function NewIRDialog(props) {
           <DialogContentText>
             Fill in the information to request for a new docker image.
           </DialogContentText>
-          <Grid container spacing={2} sx={{ pl: 1, pr: 1 }}>
-            <Grid item xs={12} sm={7}>
+          <Grid container spacing={1} sx={{ pl: 1 }}>
+            <Grid item xs={12} sm={8}>
               <TextField
                 autoFocus
                 margin="dense"
@@ -96,7 +104,7 @@ export default function NewIRDialog(props) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={11}>
+            <Grid item xs={12}>
               <TextField
                 margin="dense"
                 id="remark"
@@ -108,6 +116,31 @@ export default function NewIRDialog(props) {
                 value={input.remark}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl sx={{ pt: 2 }}>
+                <Typography color="text.secondary" gutterBottom>
+                  Parameter JSON Schema
+                </Typography>
+                <JSONInput
+                  id="a_unique_id"
+                  theme="light_mitsuketa_tribute"
+                  colors={{
+                    default: "#000000",
+                  }}
+                  style={{
+                    body: {
+                      fontSize: "14px",
+                    },
+                  }}
+                  // width="622px"
+                  locale={locale}
+                  height="380px"
+                  onChange={(e) => {
+                    setJsSchema(e.jsObject);
+                  }}
+                />
+              </FormControl>
             </Grid>
           </Grid>
         </DialogContent>

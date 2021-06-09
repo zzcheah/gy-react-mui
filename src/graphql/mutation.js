@@ -41,6 +41,7 @@ export const ADD_NEW_IMAGE = gql`
       id
       image
       tag
+      schema64
       description
     }
   }
@@ -52,6 +53,7 @@ export const ADD_IMAGE_REQUEST = gql`
       image
       tag
       remark
+      schema64
       createdAt
     }
   }

@@ -5,16 +5,20 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Grid } from "@material-ui/core";
+import { FormControl, Grid, Typography } from "@material-ui/core";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_NEW_IMAGE } from "../../graphql/mutation";
 import { useDispatch } from "react-redux";
 import { addToast, toggleLoading } from "../../slices/appSlice";
+import React from "react";
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 const defaultValue = {
   image: "",
   tag: "",
+  schema64: "",
   description: "",
 };
 
@@ -22,13 +26,18 @@ export default function AddImageDialog(props) {
   const dispatch = useDispatch();
   const { open, handleClose } = props;
   const [input, setInput] = useState(defaultValue);
+  const [jsSchema, setJsSchema] = useState({});
+
   const [addNewImage] = useMutation(ADD_NEW_IMAGE);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(input);
     dispatch(toggleLoading());
-    addNewImage({ variables: { input } })
+    const schema64 = Buffer.from(JSON.stringify(jsSchema)).toString("base64");
+    const temp = { ...input, schema64 };
+
+    addNewImage({ variables: { input: temp } })
       .then(() => {
         dispatch(
           addToast({
@@ -68,8 +77,8 @@ export default function AddImageDialog(props) {
           <DialogContentText>
             Fill in the information below to add a new docker image.
           </DialogContentText>
-          <Grid container spacing={2} sx={{ pl: 1, pr: 1 }}>
-            <Grid item xs={12} sm={7}>
+          <Grid container spacing={1} sx={{ pl: 1 }}>
+            <Grid item xs={12} sm={8}>
               <TextField
                 autoFocus
                 margin="dense"
@@ -94,7 +103,7 @@ export default function AddImageDialog(props) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={11}>
+            <Grid item xs={12}>
               <TextField
                 margin="dense"
                 required
@@ -107,6 +116,31 @@ export default function AddImageDialog(props) {
                 value={input.description}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl sx={{ pt: 2 }}>
+                <Typography color="text.secondary" gutterBottom>
+                  Parameter JSON Schema
+                </Typography>
+                <JSONInput
+                  id="a_unique_id"
+                  theme="light_mitsuketa_tribute"
+                  colors={{
+                    default: "#000000",
+                  }}
+                  style={{
+                    body: {
+                      fontSize: "14px",
+                    },
+                  }}
+                  // width="622px"
+                  locale={locale}
+                  height="380px"
+                  onChange={(e) => {
+                    setJsSchema(e.jsObject);
+                  }}
+                />
+              </FormControl>
             </Grid>
           </Grid>
         </DialogContent>

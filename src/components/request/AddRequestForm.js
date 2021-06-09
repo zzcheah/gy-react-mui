@@ -3,15 +3,18 @@ import {
   Box,
   Button,
   Container,
+  createMuiTheme,
+  Divider,
   FormControl,
   InputLabel,
   LinearProgress,
   MenuItem,
+  MuiThemeProvider,
   Select,
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CREATE_REQUEST } from "../../graphql/mutation";
 import { addToast, toggleLoading } from "../../slices/appSlice";
@@ -19,9 +22,8 @@ import DrawerLayout from "../layout/DrawerLayout";
 import axios from "axios";
 import { BACKEND_HOST } from "../../app/constants";
 import { GET_DOCKER_IMAGES } from "../../graphql/query";
-import JSONInput from "react-json-editor-ajrm";
-import locale from "react-json-editor-ajrm/locale/en";
 import { Redirect, useHistory } from "react-router-dom";
+import Form from "@rjsf/material-ui";
 
 const upload = (file, onUploadProgress) => {
   let formData = new FormData();
@@ -36,6 +38,22 @@ const upload = (file, onUploadProgress) => {
   });
 };
 
+const muiTheme = createMuiTheme({
+  // @ts-ignore
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: "standard",
+      },
+      styleOverrides: {
+        root: {
+          maxWidth: 350,
+        },
+      },
+    },
+  },
+});
+
 export default function AddRequestForm() {
   const { data } = useQuery(GET_DOCKER_IMAGES);
   const [createRequest] = useMutation(CREATE_REQUEST);
@@ -47,14 +65,14 @@ export default function AddRequestForm() {
     name: "Untitled",
     progress: 0,
     fileInfo: "",
-    image: "",
-    tag: "",
     rawParam: "",
     file: [],
     message: "",
     selectedImage: "",
     selectedTag: "",
-    index: "",
+    imageItem: "",
+    tagItem: "",
+    schema64: null,
   });
 
   const selectFile = (event) => {
@@ -68,7 +86,7 @@ export default function AddRequestForm() {
     });
   };
 
-  const uploadFile = (e) => {
+  const uploadFile = () => {
     const file = state.file;
 
     setState({
@@ -91,10 +109,13 @@ export default function AddRequestForm() {
     uploadFile()
       .then((data) => {
         console.log("successfully uploading file, creating request");
-        console.log(data);
+        // @ts-ignore
+        const tag = state.tagItem.tag;
+        // @ts-ignore
+        const image = state.imageItem.name;
         const input = {
           name: state.name,
-          image: state.image + ":" + state.tag,
+          image: image + ":" + tag,
           param: Buffer.from(JSON.stringify(state.rawParam)).toString("base64"),
           inputFiles: [data.data],
         };
@@ -128,7 +149,8 @@ export default function AddRequestForm() {
 
   const allImages = data ? data.dockerImages : [];
 
-  const allTags = state.index !== "" ? data.dockerImages[state.index].tags : [];
+  // @ts-ignore
+  const allTags = state.imageItem !== "" ? state.imageItem.tags : [];
 
   if (userStatus !== "Active") {
     alert("User is not allowed to make request until approved by admin");
@@ -142,7 +164,11 @@ export default function AddRequestForm() {
           <b>Add New Request</b>
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form id="request-form" onSubmit={handleSubmit}>
+          <Typography variant="h5" sx={{ m: 2 }}>
+            <b>Docker Image</b>
+          </Typography>
+
           <TextField
             autoComplete="name"
             name="name"
@@ -163,18 +189,16 @@ export default function AddRequestForm() {
             <InputLabel>Docker Image</InputLabel>
             <Select
               required
-              value={state.index}
+              value={state.imageItem}
               onChange={(e) => {
-                const index = e.target.value;
-                const image = allImages[index].name;
-                setState({ ...state, index, image, tag: "" });
+                setState({ ...state, imageItem: e.target.value });
               }}
             >
               <MenuItem value="" disabled>
                 <em>Docker Images</em>
               </MenuItem>
-              {allImages.map((item, index) => (
-                <MenuItem key={item.id} value={index}>
+              {allImages.map((item) => (
+                <MenuItem key={item.id} value={item}>
                   {item.name}
                 </MenuItem>
               ))}
@@ -185,73 +209,104 @@ export default function AddRequestForm() {
             <InputLabel>Tags</InputLabel>
             <Select
               required
-              value={state.tag}
+              value={state.tagItem}
               onChange={(e) => {
-                setState({ ...state, tag: e.target.value });
+                const tagItem = e.target.value;
+                // @ts-ignore
+                setState({ ...state, tagItem, schema64: tagItem.schema64 });
               }}
             >
               <MenuItem value="" disabled>
                 <em>Image Tags</em>
               </MenuItem>
               {allTags.map((item) => (
-                <MenuItem key={item.id} value={item.tag}>
+                <MenuItem key={item.id} value={item}>
                   {item.tag}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-
-          <FormControl sx={{ minWidth: 300, m: 2 }}>
-            <Typography color="text.secondary" gutterBottom>
-              JSON Parameters
-            </Typography>
-            <JSONInput
-              id="a_unique_id"
-              theme="light_mitsuketa_tribute"
-              colors={{
-                default: "#000000",
-              }}
-              style={{
-                body: {
-                  fontSize: "14px",
-                },
-              }}
-              width="622px"
-              locale={locale}
-              height="420px"
-              onChange={(e) => {
-                setState({ ...state, rawParam: e.jsObject });
-              }}
-            />
-          </FormControl>
-
-          <Box sx={{ m: 2 }}>
-            <Typography variant="body1" gutterBottom>
-              {state.file.length === 0 ? "No file selected.. " : state.fileInfo}
-            </Typography>
-            <LinearProgress
-              variant="determinate"
-              value={state.progress}
-              sx={{ height: "10px", m: "15px 0 ", width: "300px" }}
-            />
-            <Button component="label" variant="outlined" size="small">
-              Upload File
-              <input type="file" hidden onChange={selectFile} />
-            </Button>
-          </Box>
-
-          <br />
-          <Button
-            type="submit"
-            variant="contained"
-            // @ts-ignore
-            color="success"
-            size="large"
-            sx={{ float: "right", mt: 3 }}
-          >
-            Submit
-          </Button>
         </form>
+
+        <Box sx={{ height: 32 }} />
+        <Divider />
+
+        {state.schema64 && (
+          <MuiThemeProvider theme={muiTheme}>
+            <Typography variant="h5" sx={{ m: 2, pt: 1 }}>
+              <b>Parameters</b>
+            </Typography>
+            <Box sx={{ minWidth: 300, m: 2, pt: 1 }}>
+              <Form
+                // @ts-ignore
+                schema={JSON.parse(atob(state.schema64))}
+                formData={state.rawParam}
+                onChange={(e) => {
+                  setState({ ...state, rawParam: e.formData });
+                }}
+              >
+                <Fragment />
+              </Form>
+            </Box>
+          </MuiThemeProvider>
+        )}
+
+        {/* 
+        <FormControl sx={{ minWidth: 300, m: 2 }}>
+          <Typography color="text.secondary" gutterBottom>
+            JSON Parameters
+          </Typography>
+          <JSONInput
+            id="a_unique_id"
+            theme="light_mitsuketa_tribute"
+            colors={{
+              default: "#000000",
+            }}
+            style={{
+              body: {
+                fontSize: "14px",
+              },
+            }}
+            width="622px"
+            locale={locale}
+            height="420px"
+            onChange={(e) => {
+              setState({ ...state, rawParam: e.jsObject });
+            }}
+          />
+        </FormControl> */}
+        <Box sx={{ height: 32 }} />
+        <Divider />
+        <Box sx={{ m: 2, pt: 1 }}>
+          <Typography variant="h5" gutterBottom>
+            <b>Input File</b>
+          </Typography>
+
+          <Typography variant="body1" gutterBottom>
+            {state.file.length === 0 ? "No file selected.. " : state.fileInfo}
+          </Typography>
+          <LinearProgress
+            variant="determinate"
+            value={state.progress}
+            sx={{ height: "10px", m: "15px 0 ", width: "400px" }}
+          />
+          <Button component="label" variant="outlined" size="small">
+            Upload File
+            <input type="file" hidden onChange={selectFile} />
+          </Button>
+        </Box>
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          // @ts-ignore
+          color="success"
+          size="large"
+          sx={{ float: "right", mt: 3 }}
+          form="request-form"
+        >
+          Submit
+        </Button>
 
         {/* {loading ? <div>Loading...</div> : null}
         {error ? `Error! ${error.message}` : null}
