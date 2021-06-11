@@ -21,7 +21,7 @@ export default function TotalIssues() {
             Total Issues
           </Typography>
           <Typography variant="h3" gutterBottom>
-            <b>12</b>
+            <b>1</b>
           </Typography>
         </div>
         <div style={{ flexBasis: "40%", paddingTop: "8px" }}>
