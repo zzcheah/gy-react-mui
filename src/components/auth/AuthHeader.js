@@ -10,7 +10,7 @@ const AuthHeader = () => {
           right: "0px",
         }}
       >
-        <Link to="/">
+        <Link to="/" style={{ paddingRight: "5px" }}>
           <img src={"logo.png"} alt="logo" height="64px" />
         </Link>
       </div>

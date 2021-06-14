@@ -1,68 +1,38 @@
-import { useApolloClient } from "@apollo/client";
-import { Button, Container, Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { toggleLoading } from "../slices/appSlice";
-import { gql } from "@apollo/client";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container, CssBaseline, Divider } from "@material-ui/core";
+import Header from "../components/landingpage/Header";
+import Description from "../components/landingpage/Description";
+import HDIW from "../components/landingpage/HDIW";
+import UseCase from "../components/landingpage/UseCase";
 
-const LandingPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const client = useApolloClient();
-
-  const handleClick = (e) => {
-    dispatch(toggleLoading());
-  };
-
-  // console.log("Rendering Landing Page")
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/bg.jpg"})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "auto",
+    // backgroundColor: "rgb(182,209,238)",
+    backgroundColor: "rgb(210,227,245)",
+  },
+  toolbar: theme.mixins.toolbar,
+}));
+export default function App() {
+  const classes = useStyles();
   return (
     <div>
-      <Container>
-        <Typography variant="h2" component="h1">
-          Hello,
-        </Typography>
-        <Button onClick={handleClick}>Toggle Loading</Button>
-        <Button
-          onClick={() => {
-            history.push("/login");
-          }}
-        >
-          Login
-        </Button>
-        <Button
-          onClick={() => {
-            history.push("/signup");
-          }}
-        >
-          Signup
-        </Button>
-        <Button
-          onClick={() => {
-            history.push("/dashboard");
-          }}
-        >
-          Dashboard
-        </Button>
-        <Button
-          onClick={() => {
-            client
-              .query({
-                query: gql`
-                  query {
-                    countRequests
-                  }
-                `,
-              })
-              .then((result) => console.log(result))
-              .catch((err) => console.log(err));
-          }}
-        >
-          Get Request Count
-        </Button>
-      </Container>
+      <div className={classes.root}>
+        <div className={classes.toolbar} />
+        <CssBaseline />
+        <Container>
+          <Header />
+          <Description />
+          {/* <MainObjective /> */}
+          <Divider sx={{ pt: 6 }} />
+          <UseCase />
+          <HDIW />
+        </Container>
+      </div>
     </div>
   );
-};
-
-export default LandingPage;
+}
