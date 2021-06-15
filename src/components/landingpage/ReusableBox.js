@@ -6,15 +6,18 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      paddingTop: theme.spacing(6),
+      padding: "60px 0px",
     },
     box: {
       backgroundColor: "rgba(182,209,238,0.6)",
-      padding: "32px 32px 100px",
+      padding: "26px 32px 100px",
       borderRadius: "32px",
       boxShadow:
         "rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 16px 32px -4px",
       width: "70%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
       [theme.breakpoints.down("sm")]: {
         width: "90%",
       },

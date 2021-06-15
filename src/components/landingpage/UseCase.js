@@ -1,19 +1,17 @@
 import {
   Box,
-  Card,
   createStyles,
   Grid,
   makeStyles,
   Paper,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import CustomCard from "../util/CustomCard";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      paddingTop: theme.spacing(3),
+      paddingTop: theme.spacing(6),
+      paddingBottom: theme.spacing(3),
       flexDirection: "column",
       display: "flex",
       justifyContent: "center",
@@ -49,8 +47,8 @@ const UseCase = () => {
         Training a machine learning model (TensorFlow)
       </Typography>
       <div className={classes.grid}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={2} alignItems="stretch">
+          <Grid item xs={12} sm={6} md={3}>
             <StepCard>
               <Typography gutterBottom>
                 <b>1. Select Docker Image </b>
@@ -58,9 +56,10 @@ const UseCase = () => {
               <Typography color="text.secondary">
                 Docker Image contains script on how to process a request.
               </Typography>
+              <img src="assets/steps/1.svg" alt="choose" width="100%"></img>
             </StepCard>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={3}>
             <StepCard>
               <Typography gutterBottom>
                 <b>2. Enter Inputs </b>
@@ -68,9 +67,10 @@ const UseCase = () => {
               <Typography color="text.secondary">
                 Fill in image-specific parameters and upload input file.
               </Typography>
+              <img src="assets/steps/2.svg" alt="fillin" width="100%"></img>
             </StepCard>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={3}>
             <StepCard>
               <Typography gutterBottom>
                 <b>3. Submit and Wait </b>
@@ -78,9 +78,10 @@ const UseCase = () => {
               <Typography color="text.secondary">
                 Allow the request to be processed using Docker container.
               </Typography>
+              <img src="assets/steps/3.svg" alt="submit" width="100%"></img>
             </StepCard>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={3}>
             <StepCard>
               <Typography gutterBottom>
                 <b>4. Download Output File</b>
@@ -89,6 +90,7 @@ const UseCase = () => {
                 Download the output file when the request has finished
                 processing.
               </Typography>
+              <img src="assets/steps/4.svg" alt="download" width="100%"></img>
             </StepCard>
           </Grid>
         </Grid>
@@ -131,7 +133,7 @@ export default UseCase;
 
 const StepCard = ({ children }) => {
   return (
-    <Paper sx={{ p: 2, m: 1 }}>
+    <Paper sx={{ p: 2, m: 1, height: "100%" }}>
       <Box sx={{ flexGrow: 1 }}>{children}</Box>
     </Paper>
   );

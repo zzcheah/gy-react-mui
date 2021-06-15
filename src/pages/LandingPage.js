@@ -1,10 +1,10 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, CssBaseline, Divider } from "@material-ui/core";
+import { Container, CssBaseline } from "@material-ui/core";
 import Header from "../components/landingpage/Header";
 import Description from "../components/landingpage/Description";
 import HDIW from "../components/landingpage/HDIW";
 import UseCase from "../components/landingpage/UseCase";
+import Footer from "../components/landingpage/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +27,10 @@ export default function App() {
         <Container>
           <Header />
           <Description />
-          {/* <MainObjective /> */}
-          <Divider sx={{ pt: 6 }} />
           <UseCase />
           <HDIW />
         </Container>
+        <Footer />
       </div>
     </div>
   );

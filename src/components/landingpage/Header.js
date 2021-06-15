@@ -72,10 +72,15 @@ export default function Header() {
               <strong>GPU Yard</strong>
             </div>
             <Box className={classes.box} />
-            <Button size="small" sx={{ mr: 1 }}>
+            <Button component={Link} to={"/docs"} size="small" sx={{ mr: 1 }}>
               Docs
             </Button>
-            <Button size="small" variant="outlined">
+            <Button
+              component={Link}
+              to={"/signup"}
+              size="small"
+              variant="outlined"
+            >
               Sign Up
             </Button>
           </Toolbar>
