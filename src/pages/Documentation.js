@@ -129,7 +129,7 @@ const Documentation = () => {
     <div className={classes.root}>
       <DocDrawer control={{ index, setIndex }} list={list}>
         <Container>
-          <Paper sx={{ p: 8 }}>
+          <Paper sx={{ p: 8, minWidth: "750px" }}>
             <ReactMarkdown
               className={classes.gfm}
               remarkPlugins={[gfm]}

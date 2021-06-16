@@ -8,13 +8,6 @@ import WorkersPage from "../pages/WorkersPage";
 
 export const BACKEND_HOST = "http://3.219.108.65:2358/";
 
-const DASHBOARD = {
-  icon: <Dashboard />,
-  text: "Dashboard",
-  path: "/dashboard",
-  page: MyDashboard,
-};
-
 const USERS = {
   icon: <People />,
   text: "Users",
@@ -30,8 +23,8 @@ const WORKERS = {
 };
 
 export const GENERAL_PAGES = {
-  ADMIN: [DASHBOARD, USERS, WORKERS],
-  USER: [DASHBOARD, WORKERS],
+  ADMIN: [USERS, WORKERS],
+  USER: [WORKERS],
 };
 
 export const COMMON_PAGES = [

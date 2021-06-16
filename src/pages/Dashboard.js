@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import ImageRequests from "../components/dashboard/ImageRequests";
 import TopImages from "../components/dashboard/TopImages";
 import TotalIssues from "../components/dashboard/TotalIssues";
@@ -14,8 +15,11 @@ import MyRequestsList from "../components/request/MyRequestList";
 
 const Dashboard = () => {
   // @ts-ignore
-  const role = useSelector((state) => state.auth.user.role);
+  const user = useSelector((state) => state.auth.user);
 
+  if (!user) return <Redirect to="/login" />;
+
+  const role = { user };
   return (
     <DrawerLayout>
       <div style={{ marginBottom: "32px", marginTop: "16px" }}>

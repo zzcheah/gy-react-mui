@@ -38,7 +38,7 @@ Installation Guide: [Install MongoDB - MongoDB Manual](https://docs.mongodb.com/
 
 The Main Server is built using Spring Boot, ref: [GPU-Yard](https://github.com/zzcheah/GPU-Yard). The main server can be set up easily by running the [jar executable](https://gpuyard.s3.amazonaws.com/docs/gy-mainserver.jar). 
 
-** Note that the main server can only start when MongoDB connection is valid. By default the main server expect MongoDB to be hosted on the same machine. You can change the connection by override the application properties.
+** Note that the main server can only start when MongoDB connection is valid. By default, the main server expects MongoDB to be hosted on the same machine. You can change the connection by override the application properties.
 
 Guide on overriding application properties: [20. Externalized Configuration](https://docs.spring.io/spring-boot/docs/1.0.0.RC5/reference/html/boot-features-external-config.html)
 
@@ -56,7 +56,7 @@ The Task Worker application can only run under 3 conditions:
 Similar to Main Server, you can change the connection to main server by override the application properties. 
 
 When you first run the application, you will be prompted to enter your workerID (obtained after registering worker on main server).
-Upon entering valid id, the application will start and poll job from the main server. Else if invalid id is entered, the application will terminate and you will be allowerd to re-enter id.
+Upon entering valid id, the application will start and poll job from the main server. Else if invalid id is entered, the application will terminate, and you will be allowerd to re-enter id.
 
 ** Note that entering id is only required for the first time of setting up.
 

@@ -2,13 +2,13 @@ const SystemArchitecture = `
 
 # System Architecture 🛠️
 
-This section disucsses on the architecture of GPU Yard.
+This section discusses on the architecture of GPU Yard.
 
 ## Architecture Diagram
 
 ![Architecture](https://gpuyard.s3.amazonaws.com/docs/SystemArchitecture.png)
 
-The digram above shows the current architecture of GPU Yard.   
+The diagram  above shows the current architecture of GPU Yard.   
 
 ### Physical Aspect
 
@@ -35,7 +35,7 @@ GPU Yard is a 3-tier implements a **3-tier architecture** which consists of **Pr
 
 ### Main Server 
 
-The main server serves as the "middle man" between the user and the workers. The main server does not process the reqeust but act as a queue for the user requests.   
+The main server serves as the "middleman" between the user and the workers. The main server does not process the reqeust but act as a queue for the user requests.   
 
 It handles the following:
 
@@ -48,6 +48,8 @@ It handles the following:
 ### Task Worker
 
 The task workers are the actual processing units of the system. It connects with Docker Daemon to process the user request within container.
+
+The environment is **GPU-accelerated** such that application can take advantage of parallel processing. This is enabled by CUDA through [nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 
 ## Authors
 

@@ -6,7 +6,7 @@ This section explains the end-to-end flow from user making the request to user d
 
 ### Front End 
 
-1. User choose desired docker image (consists script on how to process a task)
+1. User choose desired docker image (consists of script on how to process a task)
 2. User enters image-specific parameters and upload input files.
 3. User submits the request.
    
@@ -27,7 +27,7 @@ This section explains the end-to-end flow from user making the request to user d
 
 ### Backend (Inside the container)
 
-1. Script is run to preprocess the request by:
+1. Script is run to pre-process the request by:
 - base64 decoding the parameters (encoded during request submission)
 - download input file from the main server and extract it
 2. Run the image specific script to process the request using the paramters and input file
@@ -37,7 +37,7 @@ This section explains the end-to-end flow from user making the request to user d
 
 ### Front End 
 
-1. User receives notificaiton regarding request completion.
+1. User receives notification regarding request completion.
 2. User views the request detail page and download the output file.
 
 ## Screenshots

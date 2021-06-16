@@ -23,6 +23,7 @@ import RequestDetail from "./pages/subpages/RequestDetail";
 import WorkerApplicationsPage from "./components/worker/WorkerApplicationsPage";
 import ImageRequestsPage from "./components/docker_images/ImageRequestsPage";
 import Documentation from "./pages/Documentation";
+import Dashboard from "./pages/Dashboard";
 
 function LoadingBlur({ children }) {
   const loading = useSelector((state) => state.app.loading);
@@ -147,6 +148,7 @@ function App() {
             <LoadingBlur>
               <Switch>
                 <Route exact path="/" component={LandingPage} />
+                <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/docs" component={Documentation} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignupPage} />

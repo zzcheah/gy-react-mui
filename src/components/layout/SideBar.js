@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Link, useHistory } from "react-router-dom";
 import {
   Avatar,
@@ -11,7 +12,7 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import { GENERAL_PAGES } from "../../app/constants";
-import { Person } from "@material-ui/icons";
+import { Dashboard, Person } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 
 function Logo() {
@@ -80,6 +81,18 @@ const SideBar = (props) => {
       <List sx={{ "& div": { pl: 2 } }}>
         <ListItem>
           <ListItemText primary={<strong>GENERAL</strong>} />
+        </ListItem>
+        <ListItem
+          button
+          path="/dashboard"
+          id="Dashboard"
+          selected={path.includes("/dashboard")}
+          onClick={handleNavigate}
+        >
+          <ListItemIcon>
+            <Dashboard />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
         </ListItem>
         {GENERAL_PAGES[user.role].map((item, index) => (
           <ListItem

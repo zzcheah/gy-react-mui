@@ -2,7 +2,7 @@ const RoadMap = `
 
 # Road Map 🗺️
 
-This section discuss on the Roadmap of the project and future work.
+This section discusses on the Roadmap of the project and future work.
 
 ## To-do 📌
 
@@ -15,6 +15,8 @@ This section discuss on the Roadmap of the project and future work.
 🎯 AMD GPU Support
 
 🎯 Improve security
+
+🎯 Guide on creating docker image for GPU Yard
 
 🎯 Serverless GPU Yard (separate project)
 

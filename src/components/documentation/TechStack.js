@@ -15,12 +15,12 @@ This section discusses on the technologies used in the project.
 
 ### Spring Boot
 
-Spring Boot is a popular open source Java framework to create microservice. 
+Spring Boot is a popular open-source Java framework to create microservice. 
 Spring Boot is heavily utilized in the system which can be found in the main server and task worker module. 
 
 ### React JS 
 
-React JS is a modern front end library used to build the user interview of web applciation.
+React JS is a modern front-end library used to build the user interview of web applciation.
 It boosts the productvity by using component-based building block which are highly dynamic and reusable. It also has good support in the community.
 
 ### MongoDB
@@ -34,7 +34,7 @@ In this project, it is used to store data and also used as a file system (GridFS
 
 ### Docker
 
-Docker is a containerization technologies that provides various benefits. 
+Docker is a containerization technology that provides various benefits. 
 In this project, docker is used to provide isolation betwen user requests by processing the resquest in isolated container. 
 
 Docker is used along with Nvidia-Docker to provide a GPU-accelerated environment for the container. It is crucial in speeding up processing time for GPU-intensive tasks.
@@ -54,7 +54,7 @@ In the project, TensorFlow is used to write the sample script to train machine l
 
 ### GraphQL (Apollo)
 
-GraphQL is a relatively new technologies maintained by Facebook. It is a API query language that is highly descriptive in nature. 
+GraphQL is a relatively new technologies maintained by Facebook. It is an API query language that is highly descriptive in nature. 
 
 Apollo (GraphQL library) is used to provide additional benefits such as caching to reduce the traffic to the main server.
 
