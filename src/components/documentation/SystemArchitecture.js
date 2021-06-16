@@ -1,8 +1,8 @@
 const SystemArchitecture = `
 
-# System Architecture
+# System Architecture 🛠️
 
-This section disucss on the architecture of GPU Yard.
+This section disucsses on the architecture of GPU Yard.
 
 ## Architecture Diagram
 
@@ -16,7 +16,7 @@ The digram above shows the current architecture of GPU Yard.
 
 * The Backend is divided to 2 main parts which are the *Main Server* and *Task Worker*:
     * Main Server  - hosted on **AWS EC2** 
-    * Task  Worker - any machine with proper environment (discussed in *Add New Worker* section)
+    * Task  Worker - any machine with proper environment (disucss in Installation section)
 
 
 ### Logical Aspect
@@ -29,11 +29,29 @@ GPU Yard is a 3-tier implements a **3-tier architecture** which consists of **Pr
 | Application  | Spring Boot             |
 | Database     | MongoDB                 |
 
+---
 
-* Presentation  - built using **React JS**
-* Application   - built using **Spring Boot**
-* Database      - built using Mongo
+## Backend Components 
 
+### Main Server 
+
+The main server serves as the "middle man" between the user and the workers. The main server does not process the reqeust but act as a queue for the user requests.   
+
+It handles the following:
+
+* job/task scheduling
+* queueing mechanism
+* read/write operation to the database (MongoDB) 
+* hosting endpoint to serve frontend data (GraphQL & REST API). 
+
+
+### Task Worker
+
+The task workers are the actual processing units of the system. It connects with Docker Daemon to process the user request within container.
+
+## Authors
+
+- [@zzcheah](https://www.github.com/zzcheah)
 
 `;
 

@@ -23,18 +23,16 @@ const useStyles = makeStyles((theme) =>
     content: {
       flexGrow: 1,
       maxWidth: "100%",
-      // backgroundColor: "cyan",
+      paddingTop: "86px",
       [theme.breakpoints.up("md")]: {
         maxWidth: `calc(100% - ${drawerWidth}px)`,
-        padding: theme.spacing(3),
+        padding: "86px 20px",
       },
     },
   })
 );
 
-const list = ["System Architecture", "Technologies Involves", "Little Things"];
-
-export default function DocDrawer({ children, control }) {
+export default function DocDrawer({ children, control, list }) {
   const { index, setIndex } = control;
   const classes = useStyles();
 
@@ -87,10 +85,7 @@ export default function DocDrawer({ children, control }) {
           ))}
         </List>
       </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-      >
+      <Box component="main" sx={{ flexGrow: 1, bgcolor: "whitesmoke" }}>
         <main className={classes.content}>
           <div style={{ padding: "0 15px " }}>{children}</div>
         </main>

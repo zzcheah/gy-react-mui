@@ -42,7 +42,7 @@ const HDIW = () => {
           variant="outlined"
           sx={{ mt: 3, mb: -1 }}
         >
-          Read Docs 📄
+          Read Docs 📘
         </Button>
       </ReusableBox>
     </div>

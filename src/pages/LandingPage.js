@@ -9,9 +9,7 @@ import Footer from "../components/landingpage/Footer";
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/bg.jpg"})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "auto",
+
     // backgroundColor: "rgb(182,209,238)",
     backgroundColor: "rgb(210,227,245)",
   },
@@ -22,10 +20,9 @@ export default function App() {
   return (
     <div>
       <div className={classes.root}>
-        <div className={classes.toolbar} />
         <CssBaseline />
+        <Header />
         <Container>
-          <Header />
           <Description />
           <UseCase />
           <HDIW />

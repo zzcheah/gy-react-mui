@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       height: "100vh",
       fontFamily: "Fira Sans",
+      backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/bg.jpg"})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      width: "100%",
     },
     appbar: {
       backdropFilter: "blur(6px)",
@@ -72,6 +76,14 @@ export default function Header() {
               <strong>GPU Yard</strong>
             </div>
             <Box className={classes.box} />
+            <Button
+              component={Link}
+              to={"/dashboard"}
+              size="small"
+              sx={{ mr: 1 }}
+            >
+              Dashboard
+            </Button>
             <Button component={Link} to={"/docs"} size="small" sx={{ mr: 1 }}>
               Docs
             </Button>
