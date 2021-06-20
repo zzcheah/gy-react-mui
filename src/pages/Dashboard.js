@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   if (!user) return <Redirect to="/login" />;
 
-  const role = { user };
+  const { role } = user;
   return (
     <DrawerLayout>
       <div style={{ marginBottom: "32px", marginTop: "16px" }}>
