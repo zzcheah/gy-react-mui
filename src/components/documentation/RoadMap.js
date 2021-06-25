@@ -24,7 +24,7 @@ This section discusses on the Roadmap of the project and future work.
 
 ## Community-Driven 💪
 
-This system allows the adding of new images (equivalent to how the task is processed). Hence, the system can be mpre powerful if supported by the community.
+This system allows the adding of new images (equivalent to how the task is processed). Hence, the system can be more powerful if supported by the community.
 
 Anyone in the community can write script to be used in this system. New images (with possibly newer versions) can be added which keep the system relavent as time passes.
 

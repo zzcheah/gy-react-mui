@@ -67,7 +67,31 @@ Since this system is designed to run on Linux kernel, additional configuration i
 For **Windows** machine, first set up WSL2 to enable running command using Linux Kernel. Guide: [Install WSL on Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
 Docker installation guide (Linux/WSL2): [Install Docker Engine | Docker Documentation](https://docs.docker.com/engine/install/)
-   
+
+### Nvidia Container Toolkit (nvidia-docker)
+
+Nvidia Container Toolkit is installed to enable GPU accelerated containers
+
+Instructions: 
+
+~~~bash
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+$ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+$ curl -s -L https://nvidia.github.io/libnvidia-container/experimental/$distribution/libnvidia-container-experimental.list | sudo tee /etc/apt/sources.list.d/libnvidia-container-experimental.list
+~~~
+
+~~~bash
+$ sudo apt-get update
+$ sudo apt-get install -y nvidia-docker2
+~~~
+
+### First Time running Task Worker Executable
+
+The task worker must register with the adminstrator before it can poll the job from the main server. 
+It is to ensure that the job is not assigned to unauthorized party. 
+
+The registered worker only has to enter its approved ID during the first run of the jar executable. 
 
 ## Authors
 

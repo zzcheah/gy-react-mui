@@ -40,7 +40,7 @@ const WorkerTable = ({ history }) => {
   if (error) return <div>`Error! ${error.message}`</div>;
 
   const columns = [
-    { id: "id", label: "Worker ID" },
+    ...(role === "ADMIN" ? [{ id: "id", label: "Worker ID" }] : []),
     { id: "name", label: "Name" },
     { id: "statusChip", label: "Status", minWidth: 86, align: "center" },
     { id: "runMax", label: "Slots", minWidth: 100, align: "center" },
